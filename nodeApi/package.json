@@ -1,0 +1,26 @@
+{
+  "name": "proj_crud_lab_sala",
+  "version": "1.0.0",
+  "description": "Api do projeto",
+  "homepage": "https://github.com/byKevinCosta/PROJETOS#readme",
+  "bugs": {
+    "url": "https://github.com/byKevinCosta/PROJETOS/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/byKevinCosta/PROJETOS.git"
+  },
+  "license": "ISC",
+  "author": "byMarcelo9857",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "^2.3.0",
+    "express": "^5.2.1",
+    "mssql": "^12.7.2",
+    "nodemon": "^3.1.14"
+  }
+}
