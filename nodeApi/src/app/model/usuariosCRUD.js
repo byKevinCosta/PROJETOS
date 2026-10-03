@@ -27,10 +27,12 @@ class UsuariosCRUD
                     console.log(erro);
                     return reject("Inclusão de novo usuário está com erro!");
                 }
-                resolve()
+                resolve();
             });  
             
         });
     }
 
 }
+
+module.exports = UsuariosCRUD;
