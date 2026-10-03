@@ -1,3 +1,4 @@
+require('dotenv').config(); //para puxar as variaveis do .env
 const aplicacao = require("./src/config/express");
 
 aplicacao.listen(8081, () => {

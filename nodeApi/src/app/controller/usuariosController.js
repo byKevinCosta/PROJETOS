@@ -7,7 +7,7 @@ class UsuariosController
     insereUsuario()
     {
         return ((request,response)  => {
-            let dados = request.doby;
+            let dados = request.body;
             console.log("Dados do novo usuário: ");
             console.log(dados);
             const usuariosCRUD = new UsuariosCRUD(db)

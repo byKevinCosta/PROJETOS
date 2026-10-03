@@ -1,9 +1,9 @@
 const mssql = require("mssql");
 const configuracao = {
-    user: BD_USER,
-    password: BD_PASSWORD,
-    server: BD_SERVER,
-    database: BD_DATABASE,
+    user: process.env.BD_USER,
+    password: process.env.BD_PASSWORD,
+    server: process.env.BD_SERVER,
+    database: process.env.BD_DATABASE,
     options: {
         encrypt: true,
         trustServerCertificate: true,
