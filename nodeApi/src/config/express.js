@@ -10,5 +10,7 @@ aplicacao.use(
 
 aplicacao.use(express.json());
 
+const rotaUsuario = require("../app/routes/usuariosRouters");
+rotaUsuario(aplicacao);
 
 module.exports = aplicacao;
