@@ -10,16 +10,21 @@ class UsuariosCRUD
         return new Promise((resolve,reject) => {
             function simbolosInvalidos(input) {
                 // Teste do input para bloquear caracteres especiais
-                const regex = /[^a-zA-Z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ@.\-// ]/;
+                let regex = /[^a-zA-Z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ@.\- ]/;
                 return regex.test(input);
             }
             function simbolosInvalidos2(input) {
                 // Teste do input para bloquear caracteres especiais
-                const regex = /[^a-zA-Z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ]/;
+                let regex = /[^a-zA-Z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ]/;
+                return regex.test(input);
+            }
+            function simbolosInvalidosCPF(input) {
+                // Teste do input para bloquear caracteres especiais
+                let regex = /[^0-9]/;
                 return regex.test(input);
             }
             if (simbolosInvalidos(usuario.cpf) || simbolosInvalidos(usuario.nome) || 
-            simbolosInvalidos(usuario.dataNasc) || simbolosInvalidos(usuario.celular) ||
+            simbolosInvalidosCPF(usuario.dataNasc) || simbolosInvalidos(usuario.celular) ||
             simbolosInvalidos(usuario.email) || simbolosInvalidos(usuario.usuario) ||
             simbolosInvalidos(usuario.senha)){
                 console.log("Caracteres especiais são proibidos!");
