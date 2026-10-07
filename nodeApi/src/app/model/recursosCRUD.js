@@ -39,6 +39,8 @@ class RecursosCRUD
         });
     }
 
+    
+
 }
 
 module.exports = RecursosCRUD;
