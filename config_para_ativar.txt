@@ -1,0 +1,2 @@
+npm run dev -- --host 0.0.0.0 ---abrir network (lan)
+node index.js-- ligar host back
