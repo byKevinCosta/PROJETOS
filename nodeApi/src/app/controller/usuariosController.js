@@ -26,37 +26,37 @@ class UsuariosController
             if (dados.cpf.length != 11 || invalidosNmr(dados.cpf)) {
                 response.status(400).json({
                 erro: "CPF Inválido!"
-                });
+                }).end();
             }
             if (invalidos(dados.nome) || dados.nome.length <3){
                 response.status(400).json({
                 erro: "Nome Inválido!"
-                });
+                }).end();
             }
             if (invalidos(dados.dataNasc)){
                 response.status(400).json({
                 erro: "Data Inválida!"
-                });
+                }).end();
             }
             if (dados.celular.length != 11 || invalidosNmr(dados.celular)) {
                 response.status(400).json({
                 erro: "Celular Inválido!"
-                });
+                }).end();
             }
             if (dados.email.length < 9 || invalidos(dados.email)) {
                 response.status(400).json({
                 erro: "Email Inválido!"
-                });
+                }).end();
             }
             if (dados.usuario.length < 3 || invalidos2(dados.usuario)) {
                 response.status(400).json({
                 erro: "Usuario Inválido!"
-                });
+                }).end();
             }
             if (dados.senha.length < 3 || invalidos2(dados.senha)) {
                 response.status(400).json({
                 erro: "Senha Inválida!"
-                });
+                }).end();
             }
             //criacao de usuario
             console.log("Dados do novo usuário: ");
