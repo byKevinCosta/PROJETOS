@@ -45,7 +45,7 @@ function App() {
 
             if (resposta.ok) {
 
-                alert("Usuário cadastrado com sucesso!");
+                console.log("Usuário cadastrado com sucesso!");
 
                 setCpf("");
                 setNome("");
@@ -54,6 +54,9 @@ function App() {
                 setEmail("");
                 setUsuario("");
                 setSenha("");
+
+                window.location.href="http://localhost:5173/Labs"
+
 
             } else {
 
