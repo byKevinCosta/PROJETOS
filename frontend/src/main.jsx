@@ -1,3 +1,4 @@
+
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
@@ -7,22 +8,25 @@ import {
     Route
 } from "react-router-dom";
 
-import App from "./App.jsx";
+import Inicio from "./App.jsx";
+import Cadastro from "./CADASTRO/Cadastro.jsx";
 import Labs from "./LABS/Labs.jsx";
 
 import "./index.css";
 
 createRoot(document.getElementById("root")).render(
-
     <StrictMode>
-
         <BrowserRouter>
-
             <Routes>
 
                 <Route
                     path="/"
-                    element={<App />}
+                    element={<Inicio />}
+                />
+
+                <Route
+                    path="/Cadastro"
+                    element={<Cadastro />}
                 />
 
                 <Route
@@ -31,8 +35,6 @@ createRoot(document.getElementById("root")).render(
                 />
 
             </Routes>
-
         </BrowserRouter>
-
     </StrictMode>
 );

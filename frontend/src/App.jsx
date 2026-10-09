@@ -1,175 +1,146 @@
 
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "./App.css";
 
 function App() {
-
-    const [cpf, setCpf] = useState("");
-    const [nome, setNome] = useState("");
-    const [dataNasc, setDataNasc] = useState("");
-    const [celular, setCelular] = useState("");
-    const [email, setEmail] = useState("");
-    const [usuario, setUsuario] = useState("");
-    const [senha, setSenha] = useState("");
-
-    async function cadastrarUsuario(event) {
-
-        event.preventDefault();
-        
-        const dataFormatada = dataNasc.replaceAll("-", "");
-
-        const usuarioNovo = {
-            cpf: cpf,
-            nome: nome,
-            dataNasc: dataFormatada,
-            celular: celular,
-            email: email,
-            usuario: usuario,
-            senha: senha
-        };
-
-        try {
-
-            const resposta = await fetch(
-                "http://localhost:8081/Cadastro",
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify(usuarioNovo)
-                }
-            );
-
-            if (resposta.ok) {
-
-                console.log("Usuário cadastrado com sucesso!");
-
-                setCpf("");
-                setNome("");
-                setDataNasc("");
-                setCelular("");
-                setEmail("");
-                setUsuario("");
-                setSenha("");
-
-                window.location.href="http://localhost:5173/Labs"
-
-
-            } else {
-
-                alert("Erro ao cadastrar usuário.");
-
-            }
-
-        } catch (erro) {
-
-            console.error(erro);
-            alert("Não foi possível conectar com o servidor.");
-
-        }
-    }
+    const [modalAberto, setModalAberto] = useState(false);
 
     return (
-        <div className="container">
+        <div className="pagina-inicial">
 
-            <div className="formulario">
+            <header className="cabecalho">
+                <h2 className="logo">Soufth Labs</h2>
 
-                <h1>SOFTH LABS</h1>
+                <div className="acoes">
+                    <Link to="/Cadastro" className="botao-cadastrar">
+                        Cadastrar
+                    </Link>
 
-                <p>Preencha os dados para criar sua conta</p>
+                    <Link to="/Login" className="botao-login">
+                        Login
+                    </Link>
+                </div>
+            </header>
 
-                <form onSubmit={cadastrarUsuario}>
+            <main id="inicio" className="conteudo">
 
-                    <div className="campo">
-                        <label>CPF</label>
+                <div className="apresentacao">
+                    <span className="etiqueta">
+                        BEM-VINDO
+                    </span>
 
-                        <input
-                            type="text"
-                            placeholder="Digite seu CPF"
-                            value={cpf}
-                            onChange={(event) => setCpf(event.target.value)}
-                        />
+                    <h1>
+                        Sua próxima ideia começa aqui.
+                    </h1>
+
+                    <p>
+                        Explore novas possibilidades com a
+                        Soufth Labs, uma plataforma dedicada
+                        à tecnologia e à proteção de dados.
+                    </p>
+
+                    <div className="botoes">
+                        <Link
+                            to="/Cadastro"
+                            className="botao-principal"
+                        >
+                            Começar agora
+                        </Link>
+
+                        <button
+                            type="button"
+                            className="botao-secundario"
+                            onClick={() => setModalAberto(true)}
+                        >
+                            Saiba mais
+                        </button>
                     </div>
+                </div>
 
-                    <div className="campo">
-                        <label>Nome completo</label>
+                <div className="cartao">
 
-                        <input
-                            type="text"
-                            placeholder="Digite seu nome"
-                            value={nome}
-                            onChange={(event) => setNome(event.target.value)}
-                        />
+                    <h2>PROTEÇÃO</h2>
+
+                    <p>
+                        Nosso site prioriza a segurança e a proteção
+                        dos dados armazenados, adotando medidas para
+                        prevenir acessos não autorizados e proteger
+                        suas informações contra possíveis ameaças.
+                    </p>
+                </div>
+
+            </main>
+
+            {modalAberto && (
+                <div
+                    className="modal-fundo"
+                    onClick={() => setModalAberto(false)}
+                >
+                    <div
+                        className="modal-janela"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="titulo-modal"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <button
+                            type="button"
+                            className="modal-fechar"
+                            onClick={() => setModalAberto(false)}
+                            aria-label="Fechar janela"
+                        >
+                            ×
+                        </button>
+
+                        <h2 id="titulo-modal">
+                            Sobre:
+                        </h2>
+
+                        <p className="modal-descricao">
+                            Soufth Labs tem como principal objetivo oferecer uma solução
+                            estratégica para o gerenciamento e a reserva de laboratórios,
+                            facilitando o acesso, a organização e o agendamento dos espaços
+                            disponíveis.
+                        </p>
+                        <div className="modal-informacao">
+                            <h3>Segurança e proteção</h3>
+                            <p>
+                                Buscamos proteger os dados armazenados
+                                e reduzir os riscos de acessos não
+                                autorizados às informações.
+                            </p>
+                                                    </div>
+                            <div className="modal-informacao">
+                                <h3>Reserva de laboratórios</h3>
+                                <p>
+                                    Oferecemos uma plataforma para facilitar o agendamento
+                                    de laboratórios, permitindo consultar os espaços disponíveis
+                                    e organizar as reservas de forma prática e eficiente.
+                                </p>
+                            </div>
+
+                        <div className="modal-informacao">
+                            <h3>Contatos</h3>
+                            <p>
+                                soufthlabs@gmail.com
+                            </p>
+                        </div>
+
+                        <button
+                            type="button"
+                            className="modal-botao"
+                            onClick={() => setModalAberto(false)}
+                        >
+                            Fechar
+                        </button>
                     </div>
+                </div>
+            )}
 
-                    <div className="campo">
-                        <label>Data de nascimento</label>
-
-                        <input
-                            type="date"
-                            value={dataNasc}
-                            onChange={(event) => setDataNasc(event.target.value)}
-                        />
-                    </div>
-
-                    <div className="campo">
-                        <label>Celular</label>
-
-                        <input
-                            type="text"
-                            placeholder="(00) 00000-0000"
-                            value={celular}
-                            onChange={(event) => setCelular(event.target.value)}
-                        />
-                    </div>
-
-                    <div className="campo">
-                        <label>E-mail</label>
-
-                        <input
-                            type="email"
-                            placeholder="seuemail@email.com"
-                            value={email}
-                            onChange={(event) => setEmail(event.target.value)}
-                        />
-                    </div>
-
-                    <div className="campo">
-                        <label>Usuário</label>
-
-                        <input
-                            type="text"
-                            placeholder="Escolha um usuário"
-                            value={usuario}
-                            onChange={(event) => setUsuario(event.target.value)}
-                        />
-                    </div>
-
-                    <div className="campo">
-                        <label>Senha</label>
-
-                        <input
-                            type="password"
-                            placeholder="Digite sua senha"
-                            value={senha}
-                            onChange={(event) => setSenha(event.target.value)}
-                        />
-                    </div>
-
-                    <button className="botao" type="submit">
-                        Criar minha conta
-                    </button>
-
-                </form>
-
-            </div>
 
         </div>
     );
 }
 
 export default App;
-
