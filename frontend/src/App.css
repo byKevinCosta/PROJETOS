@@ -5,175 +5,532 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: #ffffff;
-    color: #1f1f29;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f8fafc;
+    color: #172033;
 }
 
-#root {
-    width: 100%;
+.pagina-inicial {
     min-height: 100vh;
-    background: #ffffff;
 }
 
+/* CABEÇALHO */
 
-
-.container {
-    min-height: 100vh;
+.cabecalho {
     display: flex;
-    justify-content: center;
     align-items: center;
-    padding: 40px 20px;
-    background: #ffffff;
+    justify-content: space-between;
+    gap: 25px;
+    padding: 24px 8%;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
 }
 
-
-
-.formulario {
-    width: 100%;
-    max-width: 760px;
-    background: #ffffff;
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.08),
-        0 4px 12px rgba(0, 0, 0, 0.04);
-    border: 1px solid #eeeeee;
+.logo {
+    font-size: 36px;
+    color: #aa3bff;
+    font-weight: bold;
+    white-space: nowrap;
 }
 
+/* MENU */
 
-
-.formulario h1 {
-    text-align: center;
-    font-size: 34px;
-    font-weight: 700;
-    color: #8b2be2;
-    margin-bottom: 8px;
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 30px;
 }
 
-.formulario p {
-    text-align: center;
-    color: #777583;
+.menu a {
+    text-decoration: none;
+    color: #475569;
     font-size: 15px;
-    margin-bottom: 32px;
+    transition: color 0.2s;
 }
 
-
-
-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+.menu a:hover {
+    color: #aa3bff;
 }
 
-.campo {
+/* BOTÕES DO CABEÇALHO */
+
+.acoes {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.botao-login,
+.botao-cadastrar,
+.botao-principal,
+.botao-secundario {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.botao-login {
+    background: #c582fc;
+    color: white;
+    padding: 12px 22px;
+}
+
+.botao-login:hover {
+    background: #440252;
+    transform: translateY(-2px);
+}
+
+.botao-cadastrar {
+    background: #c582fc;
+    color: white;
+    padding: 12px 22px;
+}
+
+.botao-cadastrar:hover {
+    background: #440252;
+    transform: translateY(-2px);
+}
+
+/* CONTEÚDO PRINCIPAL */
+
+.conteudo {
+    min-height: 580px;
+    padding: 80px 8%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+.apresentacao {
+    max-width: 560px;
+}
+
+/* ETIQUETA DE BOAS-VINDAS */
+
+.etiqueta {
+    display: inline-block;
+    background: #f3e8ff;
+    color: #9333ea;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 24px;
+}
+
+/* TÍTULO E TEXTO */
+
+.apresentacao h1 {
+    font-size: clamp(38px, 5vw, 58px);
+    line-height: 1.1;
+    margin-bottom: 24px;
+    color: #534a5a;
+}
+
+.apresentacao p {
+    font-size: 18px;
+    color: #64748b;
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
+
+/* BOTÕES PRINCIPAIS */
+
+.botoes {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.botao-principal {
+    background: #aa3bff;
+    color: white;
+    padding: 15px 24px;
+}
+
+.botao-principal:hover {
+    background: #8d22be;
+    transform: translateY(-2px);
+}
+
+.botao-secundario {
+    background: white;
+    color: #172033;
+    border: 1px solid #cbd5e1;
+    padding: 15px 24px;
+}
+
+.botao-secundario:hover {
+    background: #f1f5f9;
+    transform: translateY(-2px);
+}
+
+/* CARTÃO DE PROTEÇÃO */
+
+.cartao {
+    width: 330px;
+    min-width: 280px;
+    min-height: 280px;
+    padding: 35px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px #0f172a0d;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.campo label {
-    font-size: 14px;
-    font-weight: 600;
-    color: #33313d;
-    margin-bottom: 7px;
+.cartao:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 55px #0f172a14;
 }
 
-.campo input {
-    width: 100%;
-    height: 46px;
-    padding: 0 14px;
+.icone {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    background: #f3e8ff;
+    color: #aa3bff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    margin-bottom: 24px;
+}
 
-    border: 1px solid #dedde5;
-    border-radius: 9px;
+.cartao h2 {
+    font-size: 23px;
+    margin-bottom: 12px;
+    color: #534a5a;
+}
 
-    background: #ffffff;
-    color: #24232c;
-
+.cartao p {
+    color: #64748b;
+    line-height: 1.7;
     font-size: 15px;
-    font-family: inherit;
-
-    outline: none;
-
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
 }
 
-.campo input:focus {
-    border-color: #aa3bff;
-    box-shadow: 0 0 0 3px rgba(170, 59, 255, 0.12);
+/* SEÇÃO SOBRE */
+
+.sobre {
+    text-align: center;
+    padding: 65px 20px;
+    background: #f3e8ff;
 }
 
-.campo input::placeholder {
-    color: #aaa8b3;
+.sobre h2 {
+    margin-bottom: 15px;
+    font-size: 30px;
+    color: #534a5a;
 }
 
-
-.botao {
-    grid-column: 1 / -1;
-
-    height: 48px;
-
-    border: none;
-    border-radius: 9px;
-
-    background: linear-gradient(
-        135deg,
-        #aa3bff,
-        #7c22c9
-    );
-
-    color: white;
-
-    font-size: 16px;
-    font-weight: 600;
-
-    cursor: pointer;
-    margin-top: 5px;
-
-    box-shadow:
-        0 6px 15px rgba(170, 59, 255, 0.25);
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+.sobre p {
+    color: #64748b;
+    line-height: 1.6;
 }
 
-.botao:hover {
-    transform: translateY(-2px);
+/* RODAPÉ */
 
-    box-shadow:
-        0 10px 22px rgba(170, 59, 255, 0.3);
+.rodape {
+    text-align: center;
+    padding: 25px;
+    background: white;
+    color: #64748b;
+    font-size: 14px;
+    border-top: 1px solid #e5e7eb;
 }
 
-.botao:active {
-    transform: translateY(0);
+/* TABLETS E CELULARES */
+
+@media (max-width: 900px) {
+    .cabecalho {
+        padding: 20px 5%;
+        flex-wrap: wrap;
+    }
+
+    .logo {
+        font-size: 30px;
+    }
+
+    .menu {
+        gap: 18px;
+    }
+
+    .conteudo {
+        padding: 60px 5%;
+        gap: 35px;
+    }
+
+    .cartao {
+        width: 300px;
+        min-width: 250px;
+    }
 }
 
+/* CELULARES */
 
 @media (max-width: 650px) {
-
-    .container {
-        padding: 20px 15px;
+    .cabecalho {
+        justify-content: space-between;
+        gap: 18px;
     }
 
-    .formulario {
-        padding: 28px 20px;
-        border-radius: 15px;
-    }
-
-    .formulario h1 {
+    .logo {
         font-size: 28px;
     }
 
-    form {
-        grid-template-columns: 1fr;
+    .acoes {
+        gap: 8px;
     }
 
-    .botao {
-        grid-column: auto;
+    .botao-login,
+    .botao-cadastrar {
+        padding: 10px 13px;
+        font-size: 13px;
+    }
+
+    .menu {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 25px;
+    }
+
+    .conteudo {
+        padding: 50px 6%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 40px;
+    }
+
+    .apresentacao {
+        max-width: 100%;
+    }
+
+    .apresentacao h1 {
+        font-size: 40px;
+    }
+
+    .apresentacao p {
+        font-size: 16px;
+    }
+
+    .cartao {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .sobre {
+        padding: 50px 20px;
+    }
+
+    .sobre h2 {
+        font-size: 25px;
     }
 }
 
+/* CELULARES PEQUENOS */
+
+@media (max-width: 380px) {
+    .cabecalho {
+        padding: 18px 4%;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+
+    .menu {
+        gap: 15px;
+    }
+
+    .menu a {
+        font-size: 13px;
+    }
+
+    .botao-login,
+    .botao-cadastrar {
+        padding: 9px 10px;
+        font-size: 12px;
+    }
+
+    .apresentacao h1 {
+        font-size: 34px;
+    }
+
+    .botoes {
+        flex-direction: column;
+    }
+
+    .botao-principal,
+    .botao-secundario {
+        width: 100%;
+    }
+}
+
+
+/* FUNDO ESCURO ATRÁS DA JANELA */
+
+.modal-fundo {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(5px);
+
+    overflow-y: auto;
+}
+
+/* JANELA DE INFORMAÇÕES */
+
+.modal-janela {
+    position: relative;
+
+    width: 100%;
+    max-width: 550px;
+    max-height: 90vh;
+    overflow-y: auto;
+
+    padding: 35px;
+    background: white;
+    border: 1px solid #e9d5ff;
+    border-radius: 20px;
+
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
+
+    animation: modalAparecer 0.25s ease-out;
+}
+
+/* ANIMAÇÃO */
+
+@keyframes modalAparecer {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* BOTÃO X */
+
+.modal-fechar {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+
+    padding: 2px 8px;
+    background: transparent;
+    color: #64748b;
+
+    font-size: 32px;
+    line-height: 1;
+    border: none;
+    cursor: pointer;
+}
+
+.modal-fechar:hover {
+    color: #aa3bff;
+}
+
+
+/* TÍTULO E DESCRIÇÃO */
+
+.modal-janela h2 {
+    margin-bottom: 15px;
+    color: #aa3bff;
+    font-size: 27px;
+}
+
+.modal-descricao {
+    margin-bottom: 22px;
+    color: #64748b;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+/* INFORMAÇÕES */
+
+.modal-informacao {
+    padding: 18px;
+    margin-bottom: 12px;
+
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.modal-informacao h3 {
+    margin-bottom: 8px;
+    color: #334155;
+    font-size: 16px;
+}
+
+.modal-informacao p {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* BOTÃO FECHAR INFERIOR */
+
+.modal-botao {
+    width: 100%;
+    margin-top: 12px;
+    padding: 14px;
+
+    background: #aa3bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.modal-botao:hover {
+    background: #8d22be;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 480px) {
+    .modal-fundo {
+        padding: 12px;
+    }
+
+    .modal-janela {
+        padding: 28px 20px;
+        max-height: 94vh;
+    }
+
+    .modal-janela h2 {
+        font-size: 23px;
+    }
+}
