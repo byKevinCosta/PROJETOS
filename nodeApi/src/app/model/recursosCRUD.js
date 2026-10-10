@@ -39,7 +39,22 @@ class RecursosCRUD
         });
     }
 
-    
+    listarReservasDoRecursoPorDia(idRecurso,dia)
+    {
+        return new Promise((resolve,reject) => {
+            const sql = `SELECT * FROM p_reserva WHERE ${idRecurso} = codigoRec 
+            AND (DAY(${dia})  = DAY(dataInicio) or DAY(${dia}) = DAY(dataFim))`;
+
+            this.db.query(sql,function(erro,recordset){
+                if(erro){
+                    console.log(erro);
+                    return reject("Listar reserva do recurso por dia está com erro!");
+                }
+                console.log("Listagem de reservas do recurso gerada com sucesso!");
+                resolve(recordset); //se não tiver reservas naquele dia, o resultado será [] vazio
+            });
+        });
+    }
 
 }
 
