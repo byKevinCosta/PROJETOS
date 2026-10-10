@@ -39,7 +39,7 @@ class RecursosCRUD
         });
     }
 
-    listarReservasDoRecursoPorDia(idRecurso,dia)
+    gerarListagemReservasDoRecursoNoDia(idRecurso,dia)
     {
         return new Promise((resolve,reject) => {
             const sql = `SELECT * FROM p_reserva WHERE ${idRecurso} = codigoRec 
