@@ -42,10 +42,9 @@ class RecursosCRUD
     gerarListagemReservasDoRecursoNoDia(idRecurso,dia)
     {
         return new Promise((resolve,reject) => {
-            const sql = `SELECT * FROM p_reserva WHERE ${idRecurso} = codigoRec 
-            AND (DAY(${dia})  = DAY(dataInicio) or DAY(${dia}) = DAY(dataFim))`;
-
-            this.db.query(sql,function(erro,recordset){
+            const sql = `SELECT * FROM p_reserva WHERE codigoRec = ${idRecurso} 
+            AND (DAY(dataInicio) = DAY('${dia}') or DAY(dataFim) = DAY('${dia}'))`;
+            this._db.query(sql,function(erro,recordset){
                 if(erro){
                     console.log(erro);
                     return reject("Listar reserva do recurso por dia está com erro!");
