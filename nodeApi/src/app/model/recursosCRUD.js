@@ -57,6 +57,21 @@ class RecursosCRUD
         });
     }
 
+    reservarRecurso(idRec,idUsuario,dataInicio,dataFim)
+    {
+        return new Promise((resolve,reject) =>{
+            const sql = `EXEC sp_reservarRecurso ${idRec}, ${idUsuario}, ${dataInicio}, ${dataFim}`;
+            this._db.query(sql,function(erro,recordset){
+                if(erro){
+                    console.log(erro);
+                    return reject("Erro ao reservar recurso!");
+                }
+                console.log("Reserva registrada com sucesso!");
+                resolve(recordset);
+            });
+        });
+    }
+
 }
 
 module.exports = RecursosCRUD;

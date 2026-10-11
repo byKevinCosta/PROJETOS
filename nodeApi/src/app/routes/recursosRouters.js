@@ -10,4 +10,5 @@ const RecursosController = require("../controller/recursosController");
     aplicacao.get("/Salas", obj_RecursosController.listarSalas());
     aplicacao.get("/Lab", obj_RecursosController.listarLaboratorios());
     aplicacao.post("/Reserva", obj_RecursosController.listarReservasDoRecursoNoDia());
+    aplicacao.post("/Reservar",obj_RecursosController.reservaRecurso());
  }
