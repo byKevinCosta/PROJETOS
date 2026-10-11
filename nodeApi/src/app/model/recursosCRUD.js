@@ -60,7 +60,7 @@ class RecursosCRUD
     reservarRecurso(idRec,idUsuario,dataInicio,dataFim)
     {
         return new Promise((resolve,reject) =>{
-            const sql = `EXEC sp_reservarRecurso ${idRec}, ${idUsuario}, ${dataInicio}, ${dataFim}`;
+            const sql = `EXEC sp_reservarRecurso ${idRec}, ${idUsuario}, '${dataInicio}', '${dataFim}'`;
             this._db.query(sql,function(erro,recordset){
                 if(erro){
                     console.log(erro);
