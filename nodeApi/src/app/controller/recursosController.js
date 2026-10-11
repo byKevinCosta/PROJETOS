@@ -1,7 +1,6 @@
 const RecursosCRUD = require("../model/recursosCRUD");
 const db = require("../../config/database");
-const { response } = require("express");
-  
+
 class RecursosController
 {
 
@@ -71,7 +70,7 @@ class RecursosController
   {
     return ((request,response) =>{
       const dados = request.body;
-      const {idRec,idUsuario,dataInicio,dataFim} = dados
+      const {idRec,idUsuario,dataInicio,dataFim} = dados;
       const recursoCRUD = new RecursosCRUD(db);
       recursoCRUD
         .reservarRecurso(idRec,idUsuario,dataInicio,dataFim)
@@ -82,7 +81,8 @@ class RecursosController
         .catch((erro) => {
           console.log(erro);
           response.status(500).json({
-            erro: "Erro ao reservar recurso"
+            erro: "Erro ao reservar recurso",
+            mensagem: `${erro.message}`
           });
         });
     });
