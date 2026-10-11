@@ -67,6 +67,28 @@ class RecursosController
     });
   }
 
+  reservaRecurso()
+  {
+    return ((request,response) =>{
+      const dados = request.body;
+      const {idRec,idUsuario,dataInicio,dataFim} = dados
+      const recursoCRUD = new RecursosCRUD(db);
+      recursoCRUD
+        .reservarRecurso(idRec,idUsuario,dataInicio,dataFim)
+        .then(() => {
+            console.log("Reserva realizada com sucesso!");
+            response.status(200).end();
+        })
+        .catch((erro) => {
+          console.log(erro);
+          response.status(500).json({
+            erro: "Erro ao reservar recurso"
+          });
+        });
+    });
+  }
+
+
 }
 
 module.exports = RecursosController;
