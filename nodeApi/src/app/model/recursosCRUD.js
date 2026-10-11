@@ -42,33 +42,43 @@ class RecursosCRUD
     gerarListagemReservasDoRecursoNoDia(idRecurso,dia)
     {
         return new Promise((resolve,reject) => {
+            const request = new this._db.Request();
+            request.input('idRec',this._db.Int,idRecurso);
+            request.input('dia',this._db.SmallDateTime,dia);
             const sql = `SELECT u.nome, r.* from p_reserva r JOIN p_usuarios u ON u.id = r.idUsuario
-					WHERE codigoRec = ${idRecurso}  
-                        AND (DAY(dataInicio) = DAY('${dia}') or DAY(dataFim) = DAY('${dia}'))`;
+					WHERE codigoRec = @idRec 
+                        AND (DAY(dataInicio) = DAY(@dia) or DAY(dataFim) = DAY(@dia))`;
 
-            this._db.query(sql,function(erro,recordset){
-                if(erro){
+            request.query(sql)
+                .then((recordset) =>{
+                    console.log("Listagem de reservas do recurso gerada com sucesso!");
+                    resolve(recordset); //se não tiver reservas naquele dia, o resultado será [] vazio
+                })
+                .catch((erro) => {
                     console.log(erro);
                     return reject("Listar reserva do recurso por dia está com erro!");
-                }
-                console.log("Listagem de reservas do recurso gerada com sucesso!");
-                resolve(recordset); //se não tiver reservas naquele dia, o resultado será [] vazio
-            });
+                });
         });
     }
 
     reservarRecurso(idRec,idUsuario,dataInicio,dataFim)
     {
         return new Promise((resolve,reject) =>{
-            const sql = `EXEC sp_reservarRecurso ${idRec}, ${idUsuario}, '${dataInicio}', '${dataFim}'`;
-            this._db.query(sql,function(erro){
-                if(erro){
-                    console.log(erro);
-                    return reject("Erro ao reservar recurso!");
-                }
-                console.log("Reserva registrada com sucesso!");
-                resolve();
-            });
+            //usei request para evitar sql injection
+            const request = new this._db.Request();
+            request.input('idRec',this._db.Int, idRec);
+            request.input('idUsuario',this._db.Int, idUsuario);
+            request.input('dataInicio',this._db.SmallDateTime, dataInicio);
+            request.input('dataFim',this._db.SmallDateTime, dataFim);
+            request.execute('sp_reservarRecurso')
+                .then(() => {
+                    console.log("Reserva registrada com sucesso!");
+                    resolve();
+                })
+                .catch((erro) => {
+                    console.error(erro);
+                    reject(erro.message);
+                });     
         });
     }
 

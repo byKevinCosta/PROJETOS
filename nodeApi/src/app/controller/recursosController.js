@@ -82,7 +82,8 @@ class RecursosController
         .catch((erro) => {
           console.log(erro);
           response.status(500).json({
-            erro: "Erro ao reservar recurso"
+            erro: "Erro ao reservar recurso",
+            mensagem: `${erro.message}`
           });
         });
     });
