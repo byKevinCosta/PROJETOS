@@ -1,7 +1,6 @@
 const RecursosCRUD = require("../model/recursosCRUD");
 const db = require("../../config/database");
-const { response } = require("express");
-  
+
 class RecursosController
 {
 
