@@ -61,13 +61,13 @@ class RecursosCRUD
     {
         return new Promise((resolve,reject) =>{
             const sql = `EXEC sp_reservarRecurso ${idRec}, ${idUsuario}, '${dataInicio}', '${dataFim}'`;
-            this._db.query(sql,function(erro,recordset){
+            this._db.query(sql,function(erro){
                 if(erro){
                     console.log(erro);
                     return reject("Erro ao reservar recurso!");
                 }
                 console.log("Reserva registrada com sucesso!");
-                resolve(recordset);
+                resolve();
             });
         });
     }

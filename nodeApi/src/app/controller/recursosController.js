@@ -71,7 +71,7 @@ class RecursosController
   {
     return ((request,response) =>{
       const dados = request.body;
-      const {idRec,idUsuario,dataInicio,dataFim} = dados
+      const {idRec,idUsuario,dataInicio,dataFim} = dados;
       const recursoCRUD = new RecursosCRUD(db);
       recursoCRUD
         .reservarRecurso(idRec,idUsuario,dataInicio,dataFim)
