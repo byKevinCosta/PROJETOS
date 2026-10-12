@@ -34,4 +34,7 @@ rotaUsuario(aplicacao);
 const rotaRecursos = require("../app/routes/recursosRouters");
 rotaRecursos(aplicacao);
 
+const rotaAcesso = require("../app/routes/acessoRouters");
+rotaAcesso(aplicacao);
+
 module.exports = aplicacao;

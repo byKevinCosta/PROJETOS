@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 class UsuariosCRUD
 {
     constructor(db)
@@ -7,8 +9,9 @@ class UsuariosCRUD
 
     inserirUsuario(dados)
     {
-        return new Promise((resolve,reject) => {
+        return new Promise( async (resolve,reject) => {
             const {cpf,nome,dataNasc,celular,email,usuario,senha} = dados;
+            const senhaHash = await bcrypt.hash(senha,9);
             const request = new this._db.Request();
             request.input('cpf',this._db.VarChar,cpf);
             request.input('nome',this._db.VarChar,nome);
@@ -16,8 +19,7 @@ class UsuariosCRUD
             request.input('celular',this._db.VarChar,celular);
             request.input('email',this._db.VarChar,email);
             request.input('usuario',this._db.VarChar,usuario);
-            request.input('senha',this._db.VarChar,senha);
-
+            request.input('senha',this._db.VarChar,senhaHash);
             request.execute('sp_criarUsuario')
                 .then(() =>{
                     resolve();
