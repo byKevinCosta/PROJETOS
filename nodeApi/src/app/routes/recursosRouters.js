@@ -1,14 +1,16 @@
 const RecursosController = require("../controller/recursosController");
- const obj_RecursosController = new RecursosController();
+const obj_RecursosController = new RecursosController();
+const Autenticador = require("../middleware/authMiddleware");
+const autenticador = new Autenticador();
 
  module.exports = (aplicacao) => {
     aplicacao.use((request, response, next) => {
         response.header("Access-Control-Allow-Origin", "*");
         next();
     });
-
-    aplicacao.get("/Salas", obj_RecursosController.listarSalas());
-    aplicacao.get("/Lab", obj_RecursosController.listarLaboratorios());
-    aplicacao.post("/Reserva", obj_RecursosController.listarReservasDoRecursoNoDia());
-    aplicacao.post("/Reservar",obj_RecursosController.reservaRecurso());
+    //rotas protegidar, precisa de fazer login para ter permissao
+    aplicacao.get("/Salas", autenticador.autenticar, obj_RecursosController.listarSalas());
+    aplicacao.get("/Lab", autenticador.autenticar, obj_RecursosController.listarLaboratorios());
+    aplicacao.post("/Reserva", autenticador.autenticar, obj_RecursosController.listarReservasDoRecursoNoDia());
+    aplicacao.post("/Reservar",autenticador.autenticar, obj_RecursosController.reservaRecurso());
  }
