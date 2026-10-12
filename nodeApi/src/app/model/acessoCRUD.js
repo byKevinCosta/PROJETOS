@@ -22,7 +22,15 @@ class AcessoCRUD
                     if (!resultado) {
                         return reject("Usuário ou senha incorreto");
                     }
-                    console.log("Login com sucesso!")
+                    const idUsuario = resposta.recordset[0].idUsuario;
+                    try {
+                        const request2 = new this._db.Request();
+                        request2.input('idUsuario',this._db.Int,idUsuario);
+                        request2.query("INSERT INTO p_historicoLogin(idUsuario,data) VALUES (@idUsuario,GETDATE())"); 
+                    } catch (erro) {
+                        console.error(erro);
+                    }
+                    console.log("Login e registro no historico de login realizado com sucesso!");
                     resolve(resposta.recordset[0]);
                 })
                 .catch((erro) =>{
