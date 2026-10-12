@@ -1,0 +1,1 @@
+JWT e Bcrypt - https://www.youtube.com/watch?v=4TLSlavzy84&t=2104s
