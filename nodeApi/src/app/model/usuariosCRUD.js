@@ -11,7 +11,7 @@ class UsuariosCRUD
     {
         return new Promise( async (resolve,reject) => {
             const {cpf,nome,dataNasc,celular,email,usuario,senha} = dados;
-            const senhaHash = await bcrypt.hash(senha,9); 
+            const senhaHash = await bcrypt.hash(senha,9);
             const request = new this._db.Request();
             request.input('cpf',this._db.VarChar,cpf);
             request.input('nome',this._db.VarChar,nome);

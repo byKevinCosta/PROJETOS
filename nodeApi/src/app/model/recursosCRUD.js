@@ -46,9 +46,7 @@ class RecursosCRUD
             request.input('idRec',this._db.Int,idRecurso);
             request.input('dia',this._db.SmallDateTime,dia);
             const sql = `SELECT u.nome, r.* from p_reserva r JOIN p_usuarios u ON u.id = r.idUsuario
-					WHERE codigoRec = @idRec 
-                        AND (DAY(dataInicio) = DAY(@dia) or DAY(dataFim) = DAY(@dia))`;
-
+					WHERE codigoRec = @idRec AND CAST(dataInicio AS DATE) <= CAST(@dia AS DATE) AND CAST(dataFim AS DATE) >= CAST(@dia AS DATE)`;
             request.query(sql)
                 .then((recordset) =>{
                     console.log("Listagem de reservas do recurso gerada com sucesso!");
@@ -77,7 +75,7 @@ class RecursosCRUD
                 })
                 .catch((erro) => {
                     console.error(erro);
-                    reject(erro.message);
+                    reject("Erro ao realizar reserva de recurso!");
                 });     
         });
     }

@@ -6,7 +6,7 @@ const configuracao = {
     database: process.env.BD_DATABASE,
     options: {
         encrypt: true,
-        trustServerCertificate: true,
+        trustServerCertificate: true
     },
 };
 
