@@ -11,7 +11,6 @@ class acessoController
             const acessoCRUD = new AcessoCRUD(db);
             acessoCRUD.verificarAcesso(dados)
                 .then((resposta) =>{
-                    console.log(resposta);
                     //token de acesso para deixar rotas privadas
                     const token = jwt.sign(
                         {
@@ -23,16 +22,16 @@ class acessoController
                         {expiresIn: '30m'}
                     )
                     console.log("Login efetivado com sucesso!");
-                    console.log(token);
                     response.status(200).json({
                         mensagem: "Login efetivado com sucesso!",
-                        usuario: {
+                        usuario: 
+                            {
                             id: resposta.idUsuario,
-                            usuario: resposta.usuario
-                        },
-                        idAdm: resposta.isAdm,
+                            usuario: resposta.usuario,
+                            idAdm: resposta.isAdm
+                            },
                         token: token
-                    }) ///vou mudar para colocar o jwt no futuro
+                    })
                 })
                 .catch((erro) => {
                     console.error(erro);
