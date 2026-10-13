@@ -12,6 +12,6 @@ const autenticador = new Autenticador();
     aplicacao.get("/Salas", autenticador.autenticar, obj_RecursosController.listarSalas());
     aplicacao.get("/Lab", autenticador.autenticar, obj_RecursosController.listarLaboratorios());
     aplicacao.post("/Reserva", autenticador.autenticar, obj_RecursosController.listarReservasDoRecursoNoDia());
-    aplicacao.post("/ReservasFiltro", autenticador.autenticar, obj_RecursosController.listarReservasPorFiltro());
+    aplicacao.get("/ReservasFiltro", autenticador.autenticar, obj_RecursosController.listarReservasPorFiltro());
     aplicacao.post("/Reservar",autenticador.autenticar, obj_RecursosController.reservaRecurso());
  }

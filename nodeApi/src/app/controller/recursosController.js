@@ -69,7 +69,14 @@ class RecursosController
   listarReservasPorFiltro()
   {
     return ((request,response) =>{
-      const dados = request.body;
+      const dados = {
+        "codigo": request.query.codigo,
+        "nome": request.query.nome,
+        "usuario": request.query.usuario,
+        "dia": request.query.dia,
+        "inicio": request.query.inicio,
+        "fim": request.query.fim
+      } 
       const recursosCRUD = new RecursosCRUD(db);
       recursosCRUD
         .gerarListagemReservaPorFiltros(dados)
