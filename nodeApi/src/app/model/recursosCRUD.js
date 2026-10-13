@@ -62,9 +62,9 @@ class RecursosCRUD
     /*fiz assim para não criar uma rota para cada filtro.
     em dados pode ser colocados os filtros:
     {
-        codigo: int,
-        nome: varchar,
-        usuario: varchar,
+        codigo: int, //codigo do recurso
+        nome: varchar, //nome do recurso
+        usuario: varchar, //nome do usuario (ou parte do nome %LIKE%)
         dia: smalldatetime, //se tiver inicio e fim não pode ter filtro dia e vice versa
         inicio: smalldatetime, //só pode ter inicio se tiver fim e vice e versa
         fim: smalldatetime
@@ -73,7 +73,7 @@ class RecursosCRUD
     gerarListagemReservaPorFiltros(dados) 
     {
         return new Promise((resolve,reject) => {
-            if(dados.dia && dados.inicio || dados.dia && dados.fim || dados.inicio && !dados.fim || !dados.dia && dados.fim)
+            if(dados.dia && dados.inicio || dados.dia && dados.fim || dados.inicio && !dados.fim || !dados.inicio && dados.fim)
             {
                 return reject("Não é possível aplicar o filtro nas datas dadas!");
             }
@@ -89,8 +89,8 @@ class RecursosCRUD
                 lista.push("r.codigoRec = @codigo");
             }
             if(dados.nome){
-                request.input('nome',this._db.VarChar,dados.nome);
-                lista.push("rec.nome = @nome");
+                request.input('nome',this._db.VarChar,`%${dados.nome}%`);
+                lista.push("rec.nome LIKE @nome");
             }
             if(dados.usuario)
             {
@@ -113,7 +113,7 @@ class RecursosCRUD
                 sql+= " WHERE "
                 for(let i=0; i<lista.length-1;i++)
                 {
-                    sql+= lista[i] + "AND ";
+                    sql+= lista[i] + " AND ";
                 }
                 sql+= lista[lista.length-1];
             }
