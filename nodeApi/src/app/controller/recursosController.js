@@ -66,6 +66,26 @@ class RecursosController
     });
   }
 
+  listarReservasPorFiltro()
+  {
+    return ((request,response) =>{
+      const dados = request.body;
+      const recursosCRUD = new RecursosCRUD(db);
+      recursosCRUD
+        .gerarListagemReservaPorFiltros(dados)
+        .then((resultados) => {
+          console.log(resultados.recordset);
+          response.json(resultados.recordset);
+        })
+        .catch((erro) => {
+          console.log(erro);
+          response.status(500).json({
+            erro: "Erro ao listar reservas dos recursos"
+          });
+        });
+    });
+  }
+
   reservaRecurso()
   {
     return ((request,response) =>{
