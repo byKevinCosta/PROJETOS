@@ -59,48 +59,6 @@ class RecursosCRUD
         });
     }
 
-//a funcao com filtros ja faz isso vou comitar só para salvar caso tenha problemas
-    gerarListagemReservaPorCodigo(codigo)
-    {
-        return new Promise((resolve,reject) => {
-            const request = new this._db.Request();
-            request.input('codigo',this._db.Int,codigo);
-            request.query(`SELECT u.nome AS 'Nome do usuario', rec.nome, r.* FROM p_reserva r 
-                JOIN p_usuarios u ON u.id = r.idUsuario
-                JOIN p_recursos rec ON rec.codigo = r.codigoRec
-                WHERE codigoRec = @codigo ORDER BY dataInicio`)
-                .then((recordset) =>{
-                    console.log("Lista de reserva gerada com sucesso!");
-                    resolve(recordset);
-                })
-                .catch((erro) =>{
-                    console.error(erro);
-                    return reject("Listagem de reserva pelo codigo do recurso está com erro!");
-                })
-        });
-    }
-/*
-    //a funcao com filtro já faz isso
-    gerarListagemReservaPorNome(nome)
-    {
-        return new Promise((resolve,reject) => {
-            const request = new this._db.Request();
-            request.input('nome',this._db.VarChar,`%${nome}`);
-            request.query(`SELECT u.nome AS 'Nome do usuário', rec.nome, r.* FROM p_reserva  r 
-                            JOIN p_usuarios u ON u.id = r.idUsuario
-                            JOIN p_recursos rec ON rec.codigo = r.codigoRec
-                            WHERE rec.nome LIKE @nome ORDER BY u.nome`)
-                .then((recordset) =>{
-                    console.log(`Listagem de reservas do recurso ${nome} gerada com sucesso!`);
-                    resolve(recordset);
-                })
-                .catch((erro) =>{
-                    console.error(erro);
-                    return reject("Erro ao listar reservas do recurso!");
-                })
-        });
-    }
-        */
     /*fiz assim para não criar uma rota para cada filtro.
     em dados pode ser colocados os filtros:
     {
