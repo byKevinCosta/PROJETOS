@@ -28,7 +28,7 @@ class acessoController
                             {
                             id: resposta.idUsuario,
                             usuario: resposta.usuario,
-                            idAdm: resposta.isAdm
+                            isAdm: resposta.isAdm
                             },
                         token: token
                     })
