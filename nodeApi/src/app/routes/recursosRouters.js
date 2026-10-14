@@ -11,7 +11,7 @@ const autenticador = new Autenticador();
     //rotas protegidar, precisa de fazer login para ter permissao
     aplicacao.get("/Salas", autenticador.autenticar, obj_RecursosController.listarSalas());
     aplicacao.get("/Lab", autenticador.autenticar, obj_RecursosController.listarLaboratorios());
-    aplicacao.post("/Reserva", autenticador.autenticar, obj_RecursosController.listarReservasDoRecursoNoDia());
-    aplicacao.get("/ReservasFiltro", autenticador.autenticar, obj_RecursosController.listarReservasPorFiltro());
+    aplicacao.post("/ReservaNoDia", autenticador.autenticar, obj_RecursosController.listarReservasDoRecursoNoDia());
+    aplicacao.get("/Reservas", autenticador.autenticar, obj_RecursosController.listarReservasPorFiltro());
     aplicacao.post("/Reservar",autenticador.autenticar, obj_RecursosController.reservaRecurso());
  }
