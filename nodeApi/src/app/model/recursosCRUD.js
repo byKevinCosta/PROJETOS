@@ -152,6 +152,64 @@ class RecursosCRUD
         });
     }
 
+    cadastrarRecurso(dados)
+    {
+        return new Promise((resolve,reject) =>{
+            const {nome,capacidade,localizacao,isLab} = dados;
+            if (!nome || !capacidade || !localizacao || isLab == undefined)
+            {
+                return reject("Erro ao cadastrar recurso, dados pendentes")
+            }
+            const request = new this._db.Request();
+            request.input('nome',this._db.VarChar,nome);
+            request.input('capacidade',this._db.Int,capacidade);
+            request.input('localizacao',this._db.VarChar,localizacao);
+            request.input('isLab',this._db.Bit,isLab);
+            request.query(`INSERT INTO p_recursos(nome,capacidade,localizacao,isLab)
+                                VALUES (@nome,@capacidade,@localizacao,@isLab);
+                            INSERT INTO p_statusRec(codigoRec,bloqueado)
+                                VALUES ((SELECT codigo FROM p_recursos WHERE nome = @nome),0)`)
+                .then(()=>{
+                    console.log("Recurso cadastrado com sucesso!");
+                    resolve();
+                })
+                .catch((erro) => {
+                    console.error(erro);
+                    return reject("Erro ao cadastrar recurso!");
+                })
+
+        })
+    }
+
+    alterarStatusRec(dados)
+    {
+        return new Promise((resolve,reject) =>{
+            const {status,id} = dados;
+            if (status != true && status != false){
+                return reject("Status deve ser true/false (bloquear/liberar)");
+            }
+            if (!id || status == undefined)
+            {
+                return reject("Erro, dados ausentes!");
+            }
+            const request = new this._db.Request();
+            request.input('id',this._db.Int,id);
+            request.input('status',this._db.Bit,status);
+            request.query(`UPDATE p_statusRec 
+                            SET bloqueado = @status
+                                WHERE codigoRec = @id`)
+                .then(() =>{
+                    console.log(`Status do recurso ${id}, atualizado para: ${status}`);
+                    resolve();
+                })
+                .catch((erro)=>{
+                    console.error(erro);
+                    return reject("Erro ao atualizar status do recurso");
+                })
+        })
+
+    }
+
 }
 
 module.exports = RecursosCRUD;

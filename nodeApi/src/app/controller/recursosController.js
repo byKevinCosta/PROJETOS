@@ -114,6 +114,46 @@ class RecursosController
     });
   }
 
+  adicionarRecurso()
+  {
+    return((request,response) => {
+      const dados = request.body;
+      const recursoCRUD = new RecursosCRUD(db);
+      recursoCRUD
+        .cadastrarRecurso(dados)
+        .then(() =>{
+          console.log("Recurso cadastrado com sucesso!");
+          response.status(201).end()
+        })
+        .catch((erro) =>{
+          console.error(erro);
+          response.status(500).json({
+            erro: "Erro ao cadastrar recurso!"
+          });
+        })
+    });
+  }
+
+  definirStatusRec()
+  {
+    return((request,response) =>{
+      const dados = request.body;
+      const recursoCRUD = new RecursosCRUD(db);
+      recursoCRUD
+        .alterarStatusRec(dados)
+        .then(() => {
+          console.log("Status do recurso alterado com sucesso!");
+          response.status(200).end();
+        })
+        .catch((erro)=>{
+          console.error(erro);
+          response.status(500).json({
+            erro: "Erro ao alterar status do recurso!"
+          })
+        });
+    })
+  }
+
 
 }
 
