@@ -1,51 +1,75 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./LAB.css";
 
 function Labs() {
-
     const [laboratorios, setLaboratorios] = useState([]);
     const [carregando, setCarregando] = useState(true);
     const [erro, setErro] = useState("");
 
     useEffect(() => {
+        async function carregarLaboratorios() {
+            const token = localStorage.getItem("token");
 
-        fetch("http://177.220.18.108:8081/Lab")
+            if (!token) {
+                setErro("Você precisa fazer login para acessar os laboratórios.");
+                setCarregando(false);
+                return;
+            }
 
-            .then(response => {
+            try {
+                const resposta = await fetch(
+                    "http://177.220.18.108:8081/Lab",
+                    {
+                        method: "GET",
+                        headers: {
+                            "Authorization": `Bearer ${token}`
+                        }
+                    }
+                );
 
-                if (!response.ok) {
-                    throw new Error("Erro HTTP: " + response.status);
+                if (!resposta.ok) {
+                    if (resposta.status === 401 || resposta.status === 403) {
+                        throw new Error(
+                            "Sessão inválida ou expirada. Faça login novamente."
+                        );
+                    }
+
+                    throw new Error("Erro HTTP: " + resposta.status);
                 }
 
-                return response.json();
-            })
-
-            .then(dados => {
+                const dados = await resposta.json();
 
                 console.log("Laboratórios recebidos:", dados);
 
-                setLaboratorios(dados);
+                // Aceita tanto uma lista direta quanto uma lista dentro de uma propriedade.
+                const lista = Array.isArray(dados)
+                    ? dados
+                    : dados.laboratorios;
+
+                if (!Array.isArray(lista)) {
+                    throw new Error(
+                        "A API não retornou uma lista de laboratórios."
+                    );
+                }
+
+                setLaboratorios(lista);
+            } catch (erro) {
+                console.error("Erro ao carregar os Labs:", erro);
+                setErro(
+                    erro.message || "Não foi possível carregar os laboratórios."
+                );
+            } finally {
                 setCarregando(false);
+            }
+        }
 
-            })
-
-            .catch(erro => {
-
-                console.log("Erro ao carregar os Labs:", erro);
-
-                setErro("Não foi possível carregar os laboratórios.");
-
-                setCarregando(false);
-
-            });
-
+        carregarLaboratorios();
     }, []);
 
     return (
         <div className="labs-container">
-
             <div className="labs-conteudo">
-
                 <h1>SOFTH LABS</h1>
 
                 <p className="labs-subtitulo">
@@ -61,20 +85,30 @@ function Labs() {
                 )}
 
                 {erro && (
-                    <p className="mensagem erro">
-                        {erro}
+                    <div>
+                        <p className="mensagem erro">{erro}</p>
+
+                        {(erro.includes("login") ||
+                          erro.includes("Sessão inválida")) && (
+                            <Link to="/Login">
+                                Ir para o login
+                            </Link>
+                        )}
+                    </div>
+                )}
+
+                {!carregando && !erro && laboratorios.length === 0 && (
+                    <p className="mensagem">
+                        Nenhum laboratório encontrado.
                     </p>
                 )}
 
                 <div className="lista-laboratorios">
-
-                    {laboratorios.map(Lab => (
-
+                    {laboratorios.map((Lab, indice) => (
                         <div
                             className="card-lab"
-                            key={Lab.codigo}
+                            key={Lab.codigo ?? indice}
                         >
-
                             <h3>{Lab.nome}</h3>
 
                             <p>
@@ -96,15 +130,10 @@ function Labs() {
                                 <strong>É laboratório:</strong>{" "}
                                 {Lab.isLab ? "Sim" : "Não"}
                             </p>
-
                         </div>
-
                     ))}
-
                 </div>
-
             </div>
-
         </div>
     );
 }

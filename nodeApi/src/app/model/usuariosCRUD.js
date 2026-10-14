@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 class UsuariosCRUD
 {
     constructor(db)
@@ -5,47 +7,27 @@ class UsuariosCRUD
         this._db = db;
     }
 
-    inserirUsuario(usuario)
+    inserirUsuario(dados)
     {
-        return new Promise((resolve,reject) => {
-            function simbolosInvalidos(input) {
-                // Teste do input para bloquear caracteres especiais
-                let regex = /[^a-zA-Z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ@.\- ]/;
-                return regex.test(input);
-            }
-            function simbolosInvalidos2(input) {
-                // Teste do input para bloquear caracteres especiais
-                let regex = /[^a-zA-Z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ]/;
-                return regex.test(input);
-            }
-            function simbolosInvalidosCPF(input) {
-                // Teste do input para bloquear caracteres especiais
-                let regex = /[^0-9]/;
-                return regex.test(input);
-            }
-            if (simbolosInvalidos(usuario.cpf) || simbolosInvalidos(usuario.nome) || 
-            simbolosInvalidosCPF(usuario.dataNasc) || simbolosInvalidos(usuario.celular) ||
-            simbolosInvalidos(usuario.email) || simbolosInvalidos(usuario.usuario) ||
-            simbolosInvalidos(usuario.senha)){
-                console.log("Caracteres especiais são proibidos!");
-                return reject("Inclusão de novo usuário negada!");
-            }
-            if (simbolosInvalidos2(usuario.usuario) || simbolosInvalidos2(usuario.senha)){
-                console.log("Não é permitido espaços nos campos usuario/senha");
-                return reject("Inclusão de novo usuário negada!");
-            }
-            const sql = `EXEC sp_criarUsuario '${usuario.cpf}','${usuario.nome}',
-            '${usuario.dataNasc}','${usuario.celular}','${usuario.email}',
-            '${usuario.usuario}','${usuario.senha}'`;
-
-            this._db.query(sql,function(erro){
-                if(erro){
-                    console.log(erro);
-                    return reject("Inclusão de novo usuário está com erro!");
-                }
-                resolve();
-            });  
-            
+        return new Promise( async (resolve,reject) => {
+            const {cpf,nome,dataNasc,celular,email,usuario,senha} = dados;
+            const senhaHash = await bcrypt.hash(senha,9);
+            const request = new this._db.Request();
+            request.input('cpf',this._db.VarChar,cpf);
+            request.input('nome',this._db.VarChar,nome);
+            request.input('dataNasc',this._db.VarChar,dataNasc);
+            request.input('celular',this._db.VarChar,celular);
+            request.input('email',this._db.VarChar,email);
+            request.input('usuario',this._db.VarChar,usuario);
+            request.input('senha',this._db.VarChar,senhaHash);
+            request.execute('sp_criarUsuario')
+                .then(() =>{
+                    resolve();
+                })
+                .catch((erro) => {
+                    console.error(erro);
+                    reject("Erro ao cadastrar usuário");
+                })            
         });
     }
 

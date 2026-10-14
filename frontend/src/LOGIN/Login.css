@@ -1,0 +1,105 @@
+/* LOGIN.CSS */
+
+.pagina-login {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    background: #f8fafc;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #172033;
+    box-sizing: border-box;
+}
+
+.pagina-login h1 {
+    margin: 0 0 10px;
+    color: #aa3bff;
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.pagina-login h2 {
+    margin: 0 0 28px;
+    color: #334155;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.pagina-login form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 380px;
+    padding: 32px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+    box-sizing: border-box;
+}
+
+.pagina-login label {
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.pagina-login input {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #172033;
+    font-size: 15px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.pagina-login input:focus {
+    border-color: #aa3bff;
+    box-shadow: 0 0 0 3px rgba(170, 59, 255, 0.12);
+}
+
+.pagina-login button {
+    margin-top: 10px;
+    padding: 14px;
+    border: none;
+    border-radius: 9px;
+    background: #aa3bff;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.pagina-login button:hover {
+    background: #9225e8;
+    transform: translateY(-1px);
+}
+
+.pagina-login button:active {
+    transform: translateY(0);
+}
+
+.pagina-login form p {
+    margin: 4px 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+@media (max-width: 480px) {
+    .pagina-login h1 {
+        font-size: 30px;
+    }
+
+    .pagina-login form {
+        padding: 24px 20px;
+    }
+}

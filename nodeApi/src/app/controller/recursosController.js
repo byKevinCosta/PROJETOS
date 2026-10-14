@@ -1,0 +1,113 @@
+const RecursosCRUD = require("../model/recursosCRUD");
+const db = require("../../config/database");
+
+class RecursosController
+{
+
+  listarSalas() 
+  {
+    return function (request, response) {
+      const recursosCRUD = new RecursosCRUD(db);
+      recursosCRUD
+        .geraListagemDeSalas()
+        .then((resultados) => {
+           console.log("DADOS (JSON) vindo da tabela RECURSOS:");
+           console.log(resultados.recordset);
+           response.json(resultados.recordset);
+        })
+        .catch((erro) => {
+          console.log(erro);
+          response.status(500).json({
+          erro: "Erro ao listar TODOS as salas!"
+        });
+      });
+    };
+  }
+
+  listarLaboratorios() 
+  {
+    return function (request, response) {
+      const recursosCRUD = new RecursosCRUD(db);
+      recursosCRUD
+        .geraListagemDeLaboratorios()
+        .then((resultados) => {
+           console.log("DADOS (JSON) vindo da tabela RECURSOS:");
+           console.log(resultados.recordset);
+           response.json(resultados.recordset);
+        })
+        .catch((erro) => {
+          console.log(erro);
+          response.status(500).json({
+          erro: "Erro ao listar TODOS os laboratorios!"
+        });
+      });
+    };
+  }
+
+  listarReservasDoRecursoNoDia()
+  {
+    return ((request,response) =>{
+      const dados = request.body;
+      const idRec = dados.idRec;
+      const dia = dados.dia;
+      const recursosCRUD = new RecursosCRUD(db);
+      recursosCRUD
+        .gerarListagemReservasDoRecursoNoDia(idRec,dia)
+        .then((resultados) => {
+          console.log(resultados.recordset);
+          response.json(resultados.recordset);
+        })
+        .catch((erro) => {
+          console.log(erro);
+          response.status(500).json({
+            erro: `Erro ao listar reservas do recurso ${idRec}, no dia ${dia}`
+          });
+        });
+    });
+  }
+
+  listarReservasPorFiltro()
+  {
+    return ((request,response) =>{
+      const dados = request.body;
+      const recursosCRUD = new RecursosCRUD(db);
+      recursosCRUD
+        .gerarListagemReservaPorFiltros(dados)
+        .then((resultados) => {
+          console.log(resultados.recordset);
+          response.json(resultados.recordset);
+        })
+        .catch((erro) => {
+          console.log(erro);
+          response.status(500).json({
+            erro: "Erro ao listar reservas dos recursos"
+          });
+        });
+    });
+  }
+
+  reservaRecurso()
+  {
+    return ((request,response) =>{
+      const dados = request.body;
+      const {idRec,idUsuario,dataInicio,dataFim} = dados;
+      const recursoCRUD = new RecursosCRUD(db);
+      recursoCRUD
+        .reservarRecurso(idRec,idUsuario,dataInicio,dataFim)
+        .then(() => {
+            console.log("Reserva realizada com sucesso!");
+            response.status(200).end();
+        })
+        .catch((erro) => {
+          console.log(erro);
+          response.status(500).json({
+            erro: "Erro ao reservar recurso"
+          });
+        });
+    });
+  }
+
+
+}
+
+module.exports = RecursosController;

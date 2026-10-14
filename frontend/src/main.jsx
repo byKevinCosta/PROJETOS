@@ -1,7 +1,6 @@
 
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-
+import React from "react";
+import ReactDOM from "react-dom/client";
 import {
     BrowserRouter,
     Routes,
@@ -11,30 +10,20 @@ import {
 import Inicio from "./App.jsx";
 import Cadastro from "./CADASTRO/Cadastro.jsx";
 import Labs from "./LABS/Labs.jsx";
+import Login from "./LOGIN/Login.jsx";
+import ProtecaoSessao from "./CONTROLE/ProtecaoSessao.jsx";
 
-import "./index.css";
-
-createRoot(document.getElementById("root")).render(
-    <StrictMode>
+ReactDOM.createRoot(document.getElementById("root")).render(
+    <React.StrictMode>
         <BrowserRouter>
+            <ProtecaoSessao />
+
             <Routes>
-
-                <Route
-                    path="/"
-                    element={<Inicio />}
-                />
-
-                <Route
-                    path="/Cadastro"
-                    element={<Cadastro />}
-                />
-
-                <Route
-                    path="/Labs"
-                    element={<Labs />}
-                />
-
+                <Route path="/" element={<Inicio />} />
+                <Route path="/Cadastro" element={<Cadastro />} />
+                <Route path="/Login" element={<Login />} />
+                <Route path="/Labs" element={<Labs />} />
             </Routes>
         </BrowserRouter>
-    </StrictMode>
+    </React.StrictMode>
 );
