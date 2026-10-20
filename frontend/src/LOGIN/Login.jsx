@@ -37,16 +37,16 @@ function Login() {
                 return;
             }
 
-            // Limpa uma sessão anterior
+            // Limpa uma sessão anterior...
             localStorage.removeItem("token");
             localStorage.removeItem("usuario");
             localStorage.removeItem("expiracaoLogin");
 
-            // Salva os dados da sessão
+            // Salva os dados da sessão...
             localStorage.setItem("token", dados.token);
             localStorage.setItem("usuario", dados.usuario.usuario);
 
-            // Define a expiração para 30 minutos
+            // Define a expiração para 30 minutos...
             const expiracao = Date.now() + 30 * 60 * 1000;
 
             localStorage.setItem(
