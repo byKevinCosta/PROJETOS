@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const RecursosCRUD = require('./recursosCRUD');
 
 class UsuariosCRUD
 {
@@ -28,6 +29,22 @@ class UsuariosCRUD
                     console.error(erro);
                     reject("Erro ao cadastrar usuário");
                 })            
+        });
+    }
+
+    listarUsuarios()
+    {
+        return new Promise( (resolve,reject) =>{
+            const sql = "SELECT * FROM p_usuarios"
+            this._db.query(sql, (erro,recordset) => {
+                if (erro)
+                {
+                    console.log(erro);
+                    return reject("Erro ao listar usuarios no BD!");
+                }
+                console.log("Dados dos usuarios listados com sucesso!");
+                return resolve(recordset);
+            })
         });
     }
 

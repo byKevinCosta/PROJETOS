@@ -76,6 +76,24 @@ class UsuariosController
                 });
         });
     }
+
+    listaUsuarios()
+    {
+        return (request,response) => {
+            const usuarioCRUD = new UsuariosCRUD(db);
+            usuarioCRUD.listarUsuarios()
+                .then((resultado) => {
+                    console.log("Dados dos usuarios gerados com sucesso!");
+                    return response.status(200).json(resultado.recordset);
+                })
+                .catch ((erro) => {
+                    console.log(erro);
+                    return response.status(500).json({
+                        erro: "Erro ao listar dados dos usuários!"
+                    })
+                })
+        }
+    }
 }
 
 module.exports = UsuariosController;

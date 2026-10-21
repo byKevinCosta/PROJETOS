@@ -1,5 +1,7 @@
 const UsuariosController = require("../controller/usuariosController");
- const obj_UsuariosController = new UsuariosController();
+const obj_UsuariosController = new UsuariosController();
+const Autenticador = require("../middleware/authMiddleware");
+const autenticador = new Autenticador();
 
  module.exports = (aplicacao) => {
     aplicacao.use((request, response, next) => {
@@ -8,4 +10,5 @@ const UsuariosController = require("../controller/usuariosController");
     });
 
     aplicacao.post("/Cadastro", obj_UsuariosController.insereUsuario());
+    aplicacao.get("/Usuarios", autenticador.autenticarAdm, obj_UsuariosController.listaUsuarios());
  }
