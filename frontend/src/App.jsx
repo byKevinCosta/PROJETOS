@@ -26,19 +26,11 @@ function App() {
             <main id="inicio" className="conteudo">
 
                 <div className="apresentacao">
-                    <span className="etiqueta">
-                        BEM-VINDO
-                    </span>
 
                     <h1>
-                        Sua próxima ideia começa aqui.
+                        Souft labs reserva de laboratorio.
                     </h1>
 
-                    <p>
-                        Explore novas possibilidades com a
-                        Soufth Labs, uma plataforma dedicada
-                        à tecnologia e à proteção de dados.
-                    </p>
 
                     <div className="botoes">
                         <Link
@@ -58,17 +50,6 @@ function App() {
                     </div>
                 </div>
 
-                <div className="cartao">
-
-                    <h2>PROTEÇÃO</h2>
-
-                    <p>
-                        Nosso site prioriza a segurança e a proteção
-                        dos dados armazenados, adotando medidas para
-                        prevenir acessos não autorizados e proteger
-                        suas informações contra possíveis ameaças.
-                    </p>
-                </div>
 
             </main>
 

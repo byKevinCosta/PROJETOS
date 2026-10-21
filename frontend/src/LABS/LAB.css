@@ -55,3 +55,20 @@
 .erro {
     color: red;
 }
+.botao-reservar {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 20px;
+    background-color: #aa3bff;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.botao-reservar:hover {
+    background-color: #8c20df;
+}

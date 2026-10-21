@@ -1,0 +1,228 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f8fafc;
+    color: #172033;
+}
+.confirmacao-fundo {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgb(15 23 42 / 55%);
+}
+.confirmacao-caixa {
+    width: min(100%, 450px);
+    padding: 24px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 12px 35px rgb(0 0 0 / 20%);
+}
+.confirmacao-caixa h2 {
+    margin-bottom: 14px;
+}
+.confirmacao-caixa p {
+    color: #475569;
+    line-height: 1.6;
+}
+.confirmacao-botoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 24px;
+}
+.confirmacao-botoes button {
+    padding: 11px 16px;
+    border: 0;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.botao-cancelar {
+    background: #e5e7eb;
+    color: #172033;
+}
+.botao-confirmar {
+    background: #aa3bff;
+    color: #ffffff;
+}
+.confirmacao-botoes button:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+@media (max-width: 650px) {
+    .lista-horarios {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+@media (max-width: 400px) {
+    .lista-horarios {
+        grid-template-columns: 1fr;
+    }
+    .confirmacao-botoes {
+        flex-direction: column-reverse;
+    }
+}
+
+.reservas-container {
+    min-height: 100vh;
+}
+
+.reservas-cabecalho {
+    background: #ffffff;
+    padding: 24px 8%;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.reservas-cabecalho h1 {
+    color: #aa3bff;
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.reservas-cabecalho p {
+    color: #64748b;
+}
+
+.reservas-conteudo {
+    max-width: 1000px;
+    margin: 35px auto;
+    padding: 0 24px 40px;
+}
+
+.botao-voltar {
+    display: inline-block;
+    padding: 12px 18px;
+    margin-bottom: 25px;
+    background: #ffffff;
+    color: #172033;
+    border: 1px solid #cbd5e1;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.botao-voltar:hover {
+    background: #f1f5f9;
+}
+
+.reserva-laboratorio {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    padding: 24px;
+    margin-bottom: 28px;
+}
+
+.reserva-laboratorio h2 {
+    margin-bottom: 16px;
+}
+
+.reserva-laboratorio p {
+    margin-top: 10px;
+    color: #475569;
+}
+
+.filtro-data {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.filtro-data label {
+    font-weight: bold;
+}
+
+.filtro-data input[type="date"] {
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #172033;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+}
+
+.reservas-conteudo > h2 {
+    margin-bottom: 10px;
+}
+
+.reservas-instrucao {
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+.lista-horarios {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.botao-horario {
+    padding: 16px 10px;
+    background: #ffffff;
+    color: #172033;
+    border: 1px solid #aa3bff;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.botao-horario:hover:not(:disabled) {
+    background: #aa3bff;
+    color: #ffffff;
+}
+
+.botao-horario:disabled {
+    cursor: not-allowed;
+}
+
+.botao-horario.horario-ocupado {
+    background: #e5e7eb;
+    color: #64748b;
+    border-color: #cbd5e1;
+}
+
+.reservas-mensagem {
+    margin-top: 18px;
+    color: #475569;
+}
+
+.reservas-erro {
+    margin: 18px 0;
+    padding: 14px;
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+}
+
+.botao-calendario {
+    width: 220px;
+    padding: 12px;
+    background: #ffffff;
+    color: #172033;
+    border: 1px solid #cbd5e1;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.botao-calendario:hover {
+    background: #f1f5f9;
+}
+
+.reservas-sucesso {
+    margin: 18px 0;
+    padding: 14px;
+    background: #5f0b9163;
+    border: 1px solid #3e084e;
+    color: #ffffff;
+}

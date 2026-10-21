@@ -23,7 +23,7 @@ function Labs() {
                     {
                         method: "GET",
                         headers: {
-                            "Authorization": `Bearer ${token}`
+                            Authorization: `Bearer ${token}`
                         }
                     }
                 );
@@ -42,7 +42,6 @@ function Labs() {
 
                 console.log("Laboratórios recebidos:", dados);
 
-                // Aceita tanto uma lista direta quanto uma lista dentro de uma propriedade.
                 const lista = Array.isArray(dados)
                     ? dados
                     : dados.laboratorios;
@@ -89,7 +88,7 @@ function Labs() {
                         <p className="mensagem erro">{erro}</p>
 
                         {(erro.includes("login") ||
-                          erro.includes("Sessão inválida")) && (
+                            erro.includes("Sessão inválida")) && (
                             <Link to="/Login">
                                 Ir para o login
                             </Link>
@@ -130,6 +129,14 @@ function Labs() {
                                 <strong>É laboratório:</strong>{" "}
                                 {Lab.isLab ? "Sim" : "Não"}
                             </p>
+
+                            <Link
+                            to="/Reservas"
+                            state={{ laboratorio: Lab }}
+                            className="botao-reservar"
+                            >
+                            Reservar
+                            </Link>
                         </div>
                     ))}
                 </div>

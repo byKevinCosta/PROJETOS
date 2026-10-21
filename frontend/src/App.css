@@ -114,16 +114,7 @@ body {
     max-width: 560px;
 }
 
-.etiqueta {
-    display: inline-block;
-    margin-bottom: 20px;
-    padding: 8px 14px;
-    background: #f3e8ff;
-    color: #9333ea;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: bold;
-}
+
 
 
 
@@ -154,14 +145,7 @@ body {
 
 
 
-.cartao {
-    width: 330px;
-    min-width: 330px;
-    padding: 30px;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 15px;
-}
+
 
 .icone {
     width: 60px;

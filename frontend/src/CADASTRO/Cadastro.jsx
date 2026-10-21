@@ -107,7 +107,6 @@ function App() {
 
                         <input
                             type="text"
-                            placeholder="Digite seu CPF"
                             value={cpf}
                             maxLength={11}
                             onChange={(event) => {
@@ -124,7 +123,6 @@ function App() {
 
                         <input
                             type="text"
-                            placeholder="Digite seu nome"
                             value={nome}
                             onChange={(event) => setNome(event.target.value)}
                         />
@@ -152,7 +150,7 @@ function App() {
 
                 <input
                     type="text"
-                    placeholder="Digite seu celular"
+
                     value={celular}
                     maxLength={11}
                     onChange={(event) => {
@@ -167,7 +165,6 @@ function App() {
 
                         <input
                             type="email"
-                            placeholder="Escreva o seu email@email.com"
                             value={email}
                             onChange={(event) => setEmail(event.target.value)}
                         />
@@ -178,7 +175,6 @@ function App() {
 
                         <input
                             type="text"
-                            placeholder="Escolha um nome de usuário"
                             value={usuario}
                             onChange={(event) => setUsuario(event.target.value)}
                         />
@@ -189,7 +185,6 @@ function App() {
 
                         <input
                             type="password"
-                            placeholder="Digite sua senha"
                             value={senha}
                             onChange={(event) => setSenha(event.target.value)}
                         />
