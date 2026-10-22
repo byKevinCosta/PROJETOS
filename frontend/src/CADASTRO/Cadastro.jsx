@@ -31,7 +31,7 @@ function App() {
         try {
 
             const resposta = await fetch(
-                "http://177.220.18.108:8081/Cadastro",
+                "http://localhost:8081/Cadastro",
                 {
                     method: "POST",
 

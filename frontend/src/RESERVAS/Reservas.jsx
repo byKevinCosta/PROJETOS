@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Reservas.css";
 
-const API = "http://177.220.18.108:8081";
+const API = "http://localhost:8081";
 
 const horarios = Array.from({ length: 13 }, (_, indice) => {
     const inicio = 10 + indice;

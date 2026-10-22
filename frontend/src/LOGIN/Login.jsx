@@ -54,7 +54,15 @@ function Login() {
                 String(expiracao)
             );
 
-            navigate("/Labs");
+            if (dados.usuario.isAdm)
+            {
+                console.log("Admin logou!");
+                navigate("/Reservas");
+            }
+            else
+            {
+                navigate("/Labs");
+            }
         } catch (error) {
             console.error("Erro no login:", error);
             setErro("Não foi possível conectar com o servidor.");

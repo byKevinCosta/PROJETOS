@@ -24,6 +24,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 <Route path="/Login" element={<Login />} />
                 <Route path="/Labs" element={<Labs />} />
                 <Route path="/Reservas" element={<Reservas />} />
+                <Route path="*" element={<h3><br></br>404 - Página não encontrada!!</h3>}/>
             </Routes>
         </BrowserRouter>
     </React.StrictMode>

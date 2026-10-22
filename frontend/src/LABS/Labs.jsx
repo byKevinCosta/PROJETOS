@@ -19,7 +19,7 @@ function Labs() {
 
             try {
                 const resposta = await fetch(
-                    "http://177.220.18.108:8081/Lab",
+                    "http://localhost:8081/Lab",
                     {
                         method: "GET",
                         headers: {
