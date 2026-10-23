@@ -174,6 +174,26 @@ class RecursosController
     })
   }
 
+  excluirReserva()
+  {
+    return ((request,response) =>{
+      const idUsuario = request.usuario.id;
+      const idReserva = request.body.idReserva;
+      const recursosCRUD = new RecursosCRUD(db);
+      recursosCRUD.exclusaoReserva(idUsuario,idReserva)
+        .then(() =>{
+          console.log("Exclusão de reserva realizada com sucesso!");
+          return response.status(200).end();
+        })
+        .catch((erro) =>{
+          console.log(erro);
+          return response.status(500).json({
+            erro:`Erro ao excluir reserva id:${idReserva} do usuário do id:${idUsuario}`
+          })
+        })
+    })
+  }
+
 
 }
 

@@ -16,6 +16,7 @@ const autenticador = new Autenticador();
     aplicacao.post("/Reservar",autenticador.autenticar, obj_RecursosController.reservaRecurso());
     aplicacao.post("/Rec",autenticador.autenticarAdm, obj_RecursosController.adicionarRecurso());
     aplicacao.delete("/Rec",autenticador.autenticarAdm, obj_RecursosController.excluirRecurso());
+    aplicacao.delete("/Reservas",autenticador.autenticar, obj_RecursosController.excluirReserva());
     aplicacao.put("/AlterarStatusRec",autenticador.autenticarAdm, obj_RecursosController.definirStatusRec());
     
  }

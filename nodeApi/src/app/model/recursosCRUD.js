@@ -229,6 +229,29 @@ class RecursosCRUD
         })
     }
 
+    exclusaoReserva(idUsuario,idReserva)
+    {
+        return new Promise((resolve,reject) =>{
+            const request = new this._db.Request();
+            request.input('idUsuario',this._db.Int,idUsuario);
+            request.input('idReserva',this._db.Int,idReserva);
+            request.query(`IF ((SELECT idUsuario FROM p_reserva WHERE idReserva = @idReserva) != @idUsuario)
+                            BEGIN
+                                RAISERROR ('id do usuário não corresponde com o id da reserva!',15,1)
+                                RETURN
+                            END
+                            DELETE FROM p_reserva WHERE idReserva = @idReserva;`)
+                        .then(()=>{
+                            console.log("Reserva excluída com sucesso!")
+                            return resolve();
+                        })
+                        .catch((erro) =>{
+                            console.error(erro);
+                            return reject("Erro ao excluír reserva!");
+                        })
+        })
+    }
+
 }
 
 module.exports = RecursosCRUD;
