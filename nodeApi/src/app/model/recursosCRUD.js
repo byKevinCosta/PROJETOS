@@ -30,9 +30,9 @@ class RecursosCRUD
             this._db.query(sql,function(erro,recordset){
                 if(erro){
                     console.log(erro);
-                    return reject("Listagem da laboratorios está com erro!");
+                    return reject("Listagem dos laboratorios está com erro!");
                 }
-                console.log("Listagem das laboratorios geradas com sucesso!");
+                console.log("Listagem dos laboratorios geradas com sucesso!");
                 resolve(recordset);
             });  
             
@@ -158,7 +158,7 @@ class RecursosCRUD
             const {nome,capacidade,localizacao,isLab} = dados;
             if (!nome || !capacidade || !localizacao || isLab == undefined)
             {
-                return reject("Erro ao cadastrar recurso, dados pendentes")
+                return reject("Erro ao cadastrar recurso, dados pendentes");
             }
             const request = new this._db.Request();
             request.input('nome',this._db.VarChar,nome);
@@ -208,6 +208,25 @@ class RecursosCRUD
                 })
         })
 
+    }
+
+    excluirRec(id)
+    {
+        return new Promise((resolve,reject) =>{
+            const request = new this._db.Request();
+            request.input('id',this._db.Int,id);
+            request.query(`DELETE FROM p_statusRec WHERE codigoRec = @id;
+                            DELETE FROM p_reserva WHERE codigoRec = @id;
+                            DELETE FROM p_recursos WHERE codigo = @id;`)
+                    .then(() =>{
+                        console.log("Recurso excluído com sucesso!");
+                        return resolve();
+                    })
+                    .catch((erro)=>{
+                        console.error(erro);
+                        return reject("Erro ao excluir recurso!");
+                    })
+        })
     }
 
 }

@@ -14,7 +14,8 @@ const autenticador = new Autenticador();
     aplicacao.post("/ReservaNoDia", autenticador.autenticar, obj_RecursosController.listarReservasDoRecursoNoDia());
     aplicacao.get("/Reservas", autenticador.autenticar, obj_RecursosController.listarReservasPorFiltro());
     aplicacao.post("/Reservar",autenticador.autenticar, obj_RecursosController.reservaRecurso());
-    aplicacao.post("/CadastrarRec",autenticador.autenticarAdm, obj_RecursosController.adicionarRecurso());
+    aplicacao.post("/Rec",autenticador.autenticarAdm, obj_RecursosController.adicionarRecurso());
+    aplicacao.delete("/Rec",autenticador.autenticarAdm, obj_RecursosController.excluirRecurso());
     aplicacao.put("/AlterarStatusRec",autenticador.autenticarAdm, obj_RecursosController.definirStatusRec());
     
  }

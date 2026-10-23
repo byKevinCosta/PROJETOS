@@ -134,6 +134,26 @@ class RecursosController
     });
   }
 
+  excluirRecurso()
+  {
+    return ((request,response) =>{
+      const id = request.body.id;
+      const recursoCRUD = new RecursosCRUD(db);
+      recursoCRUD.excluirRec(id)
+        .then(() => {
+          console.log("Recurso excluído!");
+          response.status(200).end();
+        })
+        .catch((erro) =>{
+          console.log("Erro ao excluir recurso");
+          response.status(500).json({
+            erro: "Erro ao excluir recurso"
+          })
+        })
+
+    })
+  }
+
   definirStatusRec()
   {
     return((request,response) =>{
