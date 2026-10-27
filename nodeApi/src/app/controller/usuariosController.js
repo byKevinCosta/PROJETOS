@@ -116,7 +116,7 @@ class UsuariosController
                 .catch((erro) =>{
                     console.error(erro);
                     return response.status(500).json({
-                        mensagem: "Exclusão de usuário está com erro!"
+                    mensagem:  `${erro}`
                     })
                 })
         }

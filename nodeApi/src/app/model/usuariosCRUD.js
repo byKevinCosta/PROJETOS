@@ -55,7 +55,13 @@ class UsuariosCRUD
 
 
             request.input('id',this._db.Int,id);
-            request.query(`DELETE FROM p_login WHERE idUsuario=@id;
+            request.query(`
+                            IF ((SELECT COUNT(*) FROM p_usuarios WHERE id=@id)!=1)
+                            BEGIN
+                                RAISERROR('Usuário não encontrado',15,1)
+                                RETURN
+                            END
+                            DELETE FROM p_login WHERE idUsuario=@id;
                             DELETE FROM p_reserva WHERE idUsuario=@id;
                             DELETE FROM p_historicoLogin WHERE idUsuario=@id;
                             DELETE FROM p_usuarios WHERE id=@id;
@@ -65,8 +71,9 @@ class UsuariosCRUD
                     return resolve();
                 })
                 .catch((erro) =>{
-                    console.log(erro);
-                    return reject("Erro ao excluir usuário");
+                    console.log(erro.message);
+                    console.log("Erro ao excluir usuario");
+                    return reject(erro.message);
                 })
         })
     }
