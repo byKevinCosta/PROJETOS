@@ -12,6 +12,7 @@ import Labs from "./LABS/Labs.jsx";
 import Login from "./LOGIN/Login.jsx";
 import Reservas from "./RESERVAS/Reservas.jsx";
 import ProtecaoSessao from "./CONTROLE/ProtecaoSessao.jsx";
+import Admin from "./ADM/Admin.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
@@ -24,6 +25,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 <Route path="/Login" element={<Login />} />
                 <Route path="/Labs" element={<Labs />} />
                 <Route path="/Reservas" element={<Reservas />} />
+                <Route path="/Admin" element={<Admin />} />
                 <Route path="*" element={<h3><br></br>404 - Página não encontrada!!</h3>}/>
             </Routes>
         </BrowserRouter>

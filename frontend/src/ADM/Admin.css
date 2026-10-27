@@ -1,0 +1,48 @@
+.admin {
+  max-width: 650px;
+  margin: 30px auto;
+  padding: 0 16px;
+  font-family: Arial, sans-serif;
+}
+
+.admin h1 {
+  color: #aa3bff;
+}
+
+.abas {
+  margin: 16px 0;
+}
+
+.abas button {
+  margin-right: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+
+.item p {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #555;
+}
+
+.item button {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.erro {
+  color: #b91c1c;
+}

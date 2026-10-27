@@ -57,7 +57,7 @@ function Login() {
             if (dados.usuario.isAdm)
             {
                 console.log("Admin logou!");
-                navigate("/Reservas");
+                navigate("/Admin");
             }
             else
             {
