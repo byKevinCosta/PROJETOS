@@ -11,4 +11,5 @@ const autenticador = new Autenticador();
 
     aplicacao.post("/Cadastro", obj_UsuariosController.insereUsuario());
     aplicacao.get("/Usuarios", autenticador.autenticarAdm, obj_UsuariosController.listaUsuarios());
+    aplicacao.delete("/Usuarios",autenticador.autenticar,obj_UsuariosController.excluirUser());
  }

@@ -48,6 +48,29 @@ class UsuariosCRUD
         });
     }
 
+    excluirUsuario(id)
+    {
+        return new Promise( (resolve,reject) =>{
+            const request = new this._db.Request();
+
+
+            request.input('id',this._db.Int,id);
+            request.query(`DELETE FROM p_login WHERE idUsuario=@id;
+                            DELETE FROM p_reserva WHERE idUsuario=@id;
+                            DELETE FROM p_historicoLogin WHERE idUsuario=@id;
+                            DELETE FROM p_usuarios WHERE id=@id;
+                `)
+                .then(()=>{
+                    console.log("Usuário excluído com sucesso!");
+                    return resolve();
+                })
+                .catch((erro) =>{
+                    console.log(erro);
+                    return reject("Erro ao excluir usuário");
+                })
+        })
+    }
+
 }
 
 module.exports = UsuariosCRUD;

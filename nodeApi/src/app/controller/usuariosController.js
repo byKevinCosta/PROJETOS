@@ -94,6 +94,33 @@ class UsuariosController
                 })
         }
     }
+
+    excluirUser()
+    {
+        return (request,response) => {
+            if (!request.usuario.isAdm){
+                //const id = request.usuario.id //caso permitir que um usuário exclua a propria conta
+                //mas não vou implementar agora
+                console.log("Acesso negado, função somente para administradores!");
+                return response.status(401).json({
+                    mensagem: "Acesso negado!"
+                })
+            }
+            const id = request.body.id;
+            const usuarioCRUD = new UsuariosCRUD(db);
+            usuarioCRUD.excluirUsuario(id)
+                .then(()=>{
+                    console.log(`Usuário de id:${id} excluído com sucesso!`);
+                    return response.status(200).end();
+                })
+                .catch((erro) =>{
+                    console.error(erro);
+                    return response.status(500).json({
+                        mensagem: "Exclusão de usuário está com erro!"
+                    })
+                })
+        }
+    }
 }
 
 module.exports = UsuariosController;
