@@ -30,15 +30,8 @@ function App() {
                     <h1>
                         Souft labs reserva de laboratorio.
                     </h1>
-
                 </div>
-
-
             </main>
-
-    
-
-
         </div>
     );
 }

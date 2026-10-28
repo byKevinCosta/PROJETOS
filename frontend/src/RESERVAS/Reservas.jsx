@@ -4,49 +4,29 @@ import "./Reservas.css";
 
 const API = "http://localhost:8081";
 
-const horarios = Array.from({ length: 13 }, (_, indice) => {
-    const inicio = 10 + indice;
-    const fim = inicio + 1;
+const horarios = [];
 
-    return {
-        inicio: `${String(inicio).padStart(2, "0")}:00`,
-        fim: `${String(fim).padStart(2, "0")}:00`
-    };
-});
+for (let i = 10; i < 23; i++) {
+    horarios.push({
+        inicio: i + ":00",
+        fim: (i + 1) + ":00"
+    });
+}
 
 function criarDataReserva(data, horario = "12:00:00") {
-    const [ano, mes, dia] = data.split("-").map(Number);
-    const [hora, minuto, segundo] = horario.split(":").map(Number);
-
-    return new Date(ano, mes - 1, dia, hora, minuto, segundo);
+    return new Date(data + "T" + horario);
 }
 
 function obterDataLocal() {
-    const agora = new Date();
-
-    return [
-        agora.getFullYear(),
-        String(agora.getMonth() + 1).padStart(2, "0"),
-        String(agora.getDate()).padStart(2, "0")
-    ].join("-");
+    const data = new Date();
+    return data.getFullYear() + "-" +
+        String(data.getMonth() + 1).padStart(2, "0") + "-" +
+        String(data.getDate()).padStart(2, "0");
 }
 
 function obterUsuarioDoToken(token) {
     try {
-        const parte = token.split(".")[1];
-        if (!parte) return null;
-
-        const base64 = parte.replace(/-/g, "+").replace(/_/g, "/");
-        const payload = decodeURIComponent(
-            atob(base64)
-                .split("")
-                .map((caractere) =>
-                    `%${caractere.charCodeAt(0).toString(16).padStart(2, "0")}`
-                )
-                .join("")
-        );
-
-        return JSON.parse(payload);
+        return JSON.parse(atob(token.split(".")[1]));
     } catch {
         return null;
     }
@@ -132,28 +112,19 @@ function Reservas() {
         };
     }, [data, laboratorio]);
 
-    function horarioOcupado(horario) {
-        return reservas.some((reserva) => {
-            const inicioReserva = new Date(
-                reserva.dataInicio ?? reserva.dataInicioReserva
-            );
-            const fimReserva = new Date(
-                reserva.dataFim ?? reserva.dataFimReserva
-            );
+function horarioOcupado(horario) {
+    return reservas.some(reserva => {
+        const inicio = new Date(reserva.dataInicio || reserva.dataInicioReserva);
+        const fim = new Date(reserva.dataFim || reserva.dataFimReserva);
 
-            if (
-                Number.isNaN(inicioReserva.getTime()) ||
-                Number.isNaN(fimReserva.getTime())
-            ) {
-                return false;
-            }
+        const blocoInicio = criarDataReserva(data, horario.inicio + ":00");
+        const blocoFim = criarDataReserva(data, horario.fim + ":00");
 
-            const inicioBloco = criarDataReserva(data, `${horario.inicio}:00`);
-            const fimBloco = criarDataReserva(data, `${horario.fim}:00`);
+        if (isNaN(inicio) || isNaN(fim)) return false;
 
-            return inicioReserva < fimBloco && fimReserva > inicioBloco;
-        });
-    }
+        return inicio < blocoFim && fim > blocoInicio;
+    });
+}
 
     async function confirmarReserva() {
         if (!horarioConfirmacao) return;
