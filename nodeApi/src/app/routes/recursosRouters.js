@@ -10,7 +10,7 @@ const autenticador = new Autenticador();
     });
     //rotas protegidar, precisa de fazer login para ter permissao
     aplicacao.get("/Salas", autenticador.autenticar, obj_RecursosController.listarSalas());
-    aplicacao.get("/Lab", autenticador.autenticar, obj_RecursosController.listarLaboratorios());
+    aplicacao.get("/Lab", autenticador.autenticar, obj_RecursosController.listarSalas());
     aplicacao.post("/ReservaNoDia", autenticador.autenticar, obj_RecursosController.listarReservasDoRecursoNoDia());
     aplicacao.get("/Reservas", autenticador.autenticar, obj_RecursosController.listarReservasPorFiltro());
     aplicacao.post("/Reservar",autenticador.autenticar, obj_RecursosController.reservaRecurso());
@@ -18,5 +18,6 @@ const autenticador = new Autenticador();
     aplicacao.delete("/Rec",autenticador.autenticarAdm, obj_RecursosController.excluirRecurso());
     aplicacao.delete("/Reservas",autenticador.autenticar, obj_RecursosController.excluirReserva());
     aplicacao.put("/AlterarStatusRec",autenticador.autenticarAdm, obj_RecursosController.definirStatusRec());
+    aplicacao.post("/StatusRec",autenticador.autenticarAdm, obj_RecursosController.statusRec());
     
  }

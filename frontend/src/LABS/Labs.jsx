@@ -72,7 +72,7 @@ function Labs() {
                 <h1>SOFTH LABS</h1>
 
                 <p className="labs-subtitulo">
-                    Lista de Laboratórios
+                    Lista de Recursos
                 </p>
 
                 <h2>Laboratórios disponíveis</h2>

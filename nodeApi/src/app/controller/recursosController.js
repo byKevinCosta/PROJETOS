@@ -9,7 +9,7 @@ class RecursosController
     return function (request, response) {
       const recursosCRUD = new RecursosCRUD(db);
       recursosCRUD
-        .geraListagemDeSalas()
+        .geraListagemDeRec()
         .then((resultados) => {
            console.log("DADOS (JSON) vindo da tabela RECURSOS:");
            console.log(resultados.recordset);
@@ -18,7 +18,7 @@ class RecursosController
         .catch((erro) => {
           console.log(erro);
           response.status(500).json({
-          erro: "Erro ao listar TODOS as salas!"
+          erro: "Erro ao listar TODOS os recursos!"
         });
       });
     };
@@ -191,6 +191,29 @@ class RecursosController
             erro:`Erro ao excluir reserva id:${idReserva} do usuário do id:${idUsuario}`
           })
         })
+    })
+  }
+
+  statusRec()
+  {
+    return ((request,response) =>{
+      const id = request.body.id;
+      const recursoCRUD = new RecursosCRUD(db);
+      recursoCRUD.getStatusRec(id)
+        .then((resposta) =>{
+          console.log("Resposta do status: " + resposta[0].bloqueado);
+          console.log(resposta[0].bloqueado);
+          return response.status(200).json({
+            "bloqueado": resposta[0].bloqueado
+          }).end();
+        })
+        .catch((erro) =>{
+          console.error(erro);
+          return response.status(500).json({
+            mensagem: "Erro ao obter status rec"
+          })
+        })
+
     })
   }
 

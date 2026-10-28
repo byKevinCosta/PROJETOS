@@ -5,10 +5,10 @@ class RecursosCRUD
         this._db = db;
     }
 
-    geraListagemDeSalas()
+    geraListagemDeRec()
     {
         return new Promise((resolve,reject) => {
-            const sql = "SELECT * FROM dbo.p_recursos WHERE isLab=0";
+            const sql = "SELECT * FROM dbo.p_recursos";
 
             this._db.query(sql,function(erro,recordset){
                 if(erro){
@@ -185,6 +185,7 @@ class RecursosCRUD
     {
         return new Promise((resolve,reject) =>{
             const {status,id} = dados;
+            console.log(id, status);
             if (status != true && status != false){
                 return reject("Status deve ser true/false (bloquear/liberar)");
             }
@@ -249,6 +250,24 @@ class RecursosCRUD
                             console.error(erro);
                             return reject("Erro ao excluír reserva!");
                         })
+        })
+    }
+
+    getStatusRec(id){
+        return new Promise((resolve,reject) =>{
+            const request = new this._db.Request();
+            request.input('id',this._db.Int,id);
+            console.log("O id é:" + id);
+            request.query(`SELECT bloqueado FROM p_statusRec WHERE codigoRec = @id`)
+                .then((resposta) =>{
+                    console.log("O recurso selecionado está bloqueado? ");
+                    console.log(resposta.recordset);
+                    return resolve(resposta.recordset);
+                })
+                .catch((erro) =>{
+                    console.error(erro);
+                    return reject("Erro ao pegar status do recurso");
+                })
         })
     }
 
