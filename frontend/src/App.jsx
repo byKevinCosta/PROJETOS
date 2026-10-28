@@ -40,86 +40,11 @@ function App() {
                             Começar agora
                         </Link>
 
-                        <button
-                            type="button"
-                            className="botao-secundario"
-                            onClick={() => setModalAberto(true)}
-                        >
-                            Saiba mais
-                        </button>
                     </div>
                 </div>
 
 
             </main>
-
-            {modalAberto && (
-                <div
-                    className="modal-fundo"
-                    onClick={() => setModalAberto(false)}
-                >
-                    <div
-                        className="modal-janela"
-                        role="dialog"
-                        aria-modal="true"
-                        aria-labelledby="titulo-modal"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <button
-                            type="button"
-                            className="modal-fechar"
-                            onClick={() => setModalAberto(false)}
-                            aria-label="Fechar janela"
-                        >
-                            ×
-                        </button>
-
-                        <h2 id="titulo-modal">
-                            Sobre:
-                        </h2>
-
-                        <p className="modal-descricao">
-                            Soufth Labs tem como principal objetivo oferecer uma solução
-                            estratégica para o gerenciamento e a reserva de laboratórios,
-                            facilitando o acesso, a organização e o agendamento dos espaços
-                            disponíveis.
-                        </p>
-                        <div className="modal-informacao">
-                            <h3>Segurança e proteção</h3>
-                            <p>
-                                Buscamos proteger os dados armazenados
-                                e reduzir os riscos de acessos não
-                                autorizados às informações.
-                            </p>
-                                                    </div>
-                            <div className="modal-informacao">
-                                <h3>Reserva de laboratórios</h3>
-                                <p>
-                                    Oferecemos uma plataforma para facilitar o agendamento
-                                    de laboratórios, permitindo consultar os espaços disponíveis
-                                    e organizar as reservas de forma prática e eficiente.
-                                </p>
-                            </div>
-
-                        <div className="modal-informacao">
-                            <h3>Contatos</h3>
-                            <p>
-                                soufthlabs@gmail.com
-                            </p>
-                        </div>
-
-                        <button
-                            type="button"
-                            className="modal-botao"
-                            onClick={() => setModalAberto(false)}
-                        >
-                            Fechar
-                        </button>
-                    </div>
-                </div>
-            )}
-
-
         </div>
     );
 }
