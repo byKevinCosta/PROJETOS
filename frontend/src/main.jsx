@@ -1,10 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import {
-    BrowserRouter,
-    Routes,
-    Route
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
+
 
 import Inicio from "./App.jsx";
 import Cadastro from "./CADASTRO/Cadastro.jsx";
@@ -14,10 +11,53 @@ import Reservas from "./RESERVAS/Reservas.jsx";
 import ProtecaoSessao from "./CONTROLE/ProtecaoSessao.jsx";
 import Admin from "./ADM/Admin.jsx";
 
+
+
+
+function GeraNav()
+{
+
+    const navigate = useNavigate();
+
+    const limparSessao = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("expiracaoLogin");
+    navigate("/");
+    }
+
+  const token = localStorage.getItem("token");
+
+  if (!token)
+  {
+    return(
+            <nav>
+                <Link to='/' className="nomeSite">Soufth Labs</Link>
+                <Link to="/Cadastro">Cadastro</Link>
+                <Link to="/Login">Login</Link>
+            </nav>
+    )
+  }
+  return(
+            <nav>
+                <Link to='/' className="nomeSite">Soufth Labs</Link>
+                <Link to="/Labs">Labs</Link>
+                <button className="btSair" onClick={limparSessao}>Sair</button>
+
+            </nav>
+  )
+
+}
+
+
+
+
+
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
         <BrowserRouter>
             <ProtecaoSessao />
+                <GeraNav/>
 
             <Routes>
                 <Route path="/" element={<Inicio />} />

@@ -28,7 +28,7 @@ function App() {
                 <div className="apresentacao">
 
                     <h1>
-                        Souft labs reserva de laboratorio.
+                        Soufth labs reserva de laboratorio.
                     </h1>
                 </div>
             </main>

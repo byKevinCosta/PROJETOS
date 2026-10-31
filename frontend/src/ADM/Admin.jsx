@@ -22,7 +22,7 @@ function Admin() {
     const payload = jwtDecode(token);
     if(!payload.isAdm)
     {
-      navigate("/Login");
+      navigate("/notFound");
       return;
     }
     buscarRecursos();
