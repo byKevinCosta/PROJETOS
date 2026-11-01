@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
+import { jwtDecode } from "jwt-decode";
 
 
 import Inicio from "./App.jsx";
@@ -10,6 +11,7 @@ import Login from "./LOGIN/Login.jsx";
 import Reservas from "./RESERVAS/Reservas.jsx";
 import ProtecaoSessao from "./CONTROLE/ProtecaoSessao.jsx";
 import Admin from "./ADM/Admin.jsx";
+import Reservados from "./RESERVADOS/Reservados.jsx";
 
 
 
@@ -38,6 +40,19 @@ function GeraNav()
             </nav>
     )
   }
+    const payload = jwtDecode(token);
+    if(payload.isAdm)
+    {
+        return(
+            <nav>
+                <Link to='/' className="nomeSite">Soufth Labs</Link>
+                <Link to="/Admin">Admin</Link>
+                <Link to="/Labs">Labs</Link>
+                <button className="btSair" onClick={limparSessao}>Sair</button>
+
+            </nav>
+        )
+    }
   return(
             <nav>
                 <Link to='/' className="nomeSite">Soufth Labs</Link>
@@ -66,6 +81,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 <Route path="/Labs" element={<Labs />} />
                 <Route path="/Reservas" element={<Reservas />} />
                 <Route path="/Admin" element={<Admin />} />
+                <Route path="/Reservados" element={<Reservados />} />
                 <Route path="*" element={<h3><br></br>404 - Página não encontrada!!</h3>}/>
             </Routes>
         </BrowserRouter>

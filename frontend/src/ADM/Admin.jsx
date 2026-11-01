@@ -145,6 +145,9 @@ function Admin() {
         <button onClick={() => { setAba("listar"); buscarUsuarios(); }}>
           Listar usuário
         </button>
+        <button onClick={() => { navigate('/Reservados') }}>
+          Reservas
+        </button>
       </div>
 
       {erro && <p className="erro">{erro}</p>}
@@ -162,11 +165,11 @@ function Admin() {
               </button>
 
               {item.bloqueado ? (
-                <button onClick={() => bloqRecurso(item.codigo, false)}>
+                <button className='desbloquear' onClick={() => bloqRecurso(item.codigo, false)}>
                   Desbloquear
                 </button>
               ) : (
-                <button onClick={() => bloqRecurso(item.codigo, true)}>
+                <button className='bloquear' onClick={() => bloqRecurso(item.codigo, true)}>
                   Bloquear
                 </button>
               )}
