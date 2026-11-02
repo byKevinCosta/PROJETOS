@@ -1,0 +1,80 @@
+.opcoes{
+    margin: 10px;
+    color: #000;
+    background-color: #FFF;
+    display: flex;
+    font-weight: bolder;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.pagina{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background: #f8fafc;
+    font-family: Arial, sans-serif;
+
+}
+
+.opcoes label{
+    display: flex;
+    flex-direction: row;
+}
+
+.opcoes label input{
+    margin-left:10px;
+}
+
+.opcoes p {
+    margin-left: 10px;
+}
+
+.opcoes form{
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    color: #aa3bff;
+}
+
+button{
+    padding: 12px 20px;
+    border: none;
+    border-radius: 0;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.botoes{
+    display: flex;
+    justify-content: center;
+}
+
+.reservas{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap:15px;
+    margin: 40px;
+    margin-bottom: 40px;
+}
+
+.cards{
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+
+}
+
+.cards p{
+    font-weight: bolder;
+}
+
+.cards span{
+    font-weight: lighter;
+}

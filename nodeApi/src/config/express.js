@@ -10,7 +10,7 @@ aplicacao.use(
 
 aplicacao.use((req, res, next) => {
   // Permite a origem do seu frontend React
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+  res.setHeader('Access-Control-Allow-Origin', '*');
   
   // Resolve o erro exato do seu console: libera o envio de JSON (content-type)
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');

@@ -1,5 +1,5 @@
 
-const url = "http://177.220.18.108:8081/Lab";
+const url = "http://localhost:8081/Lab";
 
 fetch(url)
     .then(response => {

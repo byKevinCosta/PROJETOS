@@ -50,16 +50,29 @@
 .bloquear{
   background: unset;
   background: #ff0000;
-  width: 100px;
+  width: 130px;
 }
 
 .desbloquear{
   background-color: #00ff00;
-  width: 100px;
+  width: 130px;
 }
 
 .acoes-botoes{
   display: flex;
   justify-content: space-around;
   gap:30px;
+}
+
+input,label{
+    font-weight: bolder;
+    font-size: 15px;
+    margin-left:10px;
+
+}
+
+.form{
+  background-color: white;
+  border-radius: 15px;
+  padding: 20px;
 }

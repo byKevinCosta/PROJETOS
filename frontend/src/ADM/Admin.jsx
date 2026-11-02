@@ -131,6 +131,33 @@ function Admin() {
       .catch(() => setErro("Erro ao remover usuário"));
   }
 
+  function cadastrarRec(formulario){
+
+    formulario.preventDefault();
+        if (!formulario) return;
+        const form = new FormData(formulario.currentTarget);
+        const dados = Object.fromEntries(form);
+        console.log(dados);
+        let params = {};
+    fetch(API + "/Rec", {
+      method: "POST",
+      headers: headers(),
+      body: JSON.stringify({ 
+        nome: dados.nome,
+        capacidade: dados.capacidade,
+        localizacao: dados.localizacao,
+        isLab: dados.isLab
+       })
+    })
+      .then((resposta) => {
+        if (!resposta.ok) throw new Error("Falha ao cadastrar");
+        alert("Recurso cadastrado com sucesso!");
+        setAba("recursos"); 
+        buscarRecursos();
+      })
+      .catch(() => setErro("Erro ao cadastrar recurso"));
+  }
+
   return (
     <div className="admin">
       <h1>Admin</h1>
@@ -142,8 +169,8 @@ function Admin() {
         <button onClick={() => { setAba("usuarios"); buscarUsuarios(); }}>
           Usuários
         </button>
-        <button onClick={() => { setAba("listar"); buscarUsuarios(); }}>
-          Listar usuário
+        <button onClick={() => { setAba("cadastrarRec"); }}>
+          Cadastrar Recurso
         </button>
         <button onClick={() => { navigate('/Reservados') }}>
           Reservas
@@ -177,15 +204,27 @@ function Admin() {
           </div>
         ))}
 
-      {aba === "listar" &&
-        usuarios.map((item) => (
-          <div key={item.id} className="item">
-            <div>
-              <b>{item.nome}</b>
-              <p>ID: {item.id} | {item.email}</p>
-            </div>
+      {aba === "cadastrarRec" && 
+          <div className="form">
+            <form onSubmit={cadastrarRec}>
+              <label>Nome do Recurso:</label>
+              <input type="text" name="nome"></input>
+              <label>Capacidade:</label>
+              <input type="number" name="capacidade"></input>
+              <label>Localização:</label>
+              <input type="text" name="localizacao"></input>
+              <label>É laboratório:</label>
+              <label>
+                <input type="radio" name="isLab" value={true}/>Sim
+                <input type="radio" name="isLab" value={false}/>Não
+              </label>
+              <button type="reset">Limpar</button>
+              <button type="submit">Cadastrar</button>
+
+            </form>
           </div>
-        ))}
+        
+        }
 
       {aba === "usuarios" &&
         usuarios.map((item) => (
