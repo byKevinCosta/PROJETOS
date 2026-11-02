@@ -215,8 +215,8 @@ function Admin() {
               <input type="text" name="localizacao"></input>
               <label>É laboratório:</label>
               <label>
-                <input type="radio" name="isLab" value={true}/>Sim
-                <input type="radio" name="isLab" value={false}/>Não
+                <input type="radio" name="isLab" value="1"/>Sim
+                <input type="radio" name="isLab" value="0"/>Não
               </label>
               <button type="reset">Limpar</button>
               <button type="submit">Cadastrar</button>

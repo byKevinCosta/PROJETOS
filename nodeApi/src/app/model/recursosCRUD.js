@@ -156,6 +156,7 @@ class RecursosCRUD
     {
         return new Promise((resolve,reject) =>{
             const {nome,capacidade,localizacao,isLab} = dados;
+            console.log("É lab?",isLab)
             if (!nome || !capacidade || !localizacao || isLab == undefined)
             {
                 return reject("Erro ao cadastrar recurso, dados pendentes");
@@ -164,7 +165,8 @@ class RecursosCRUD
             request.input('nome',this._db.VarChar,nome);
             request.input('capacidade',this._db.Int,capacidade);
             request.input('localizacao',this._db.VarChar,localizacao);
-            request.input('isLab',this._db.Bit,isLab);
+            let eLab = (isLab == "0" || isLab === false || isLab === 0)? 0:1;
+            request.input('isLab',this._db.Bit,eLab);
             request.query(`INSERT INTO p_recursos(nome,capacidade,localizacao,isLab)
                                 VALUES (@nome,@capacidade,@localizacao,@isLab);
                             INSERT INTO p_statusRec(codigoRec,bloqueado)
