@@ -55,7 +55,7 @@ function App() {
                 setUsuario("");
                 setSenha("");
 
-                window.location.href="http://localhost:5173/Labs" /*alterar para um servidor valido*/
+                window.location.href="http://localhost:5173/Login" /*alterar para um servidor valido*/
 
                 /*caminho json 
                 cadastro
