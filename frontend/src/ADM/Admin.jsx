@@ -22,7 +22,7 @@ function Admin() {
     const payload = jwtDecode(token);
     if(!payload.isAdm)
     {
-      navigate("/Login");
+      navigate("/notFound");
       return;
     }
     buscarRecursos();
@@ -131,6 +131,33 @@ function Admin() {
       .catch(() => setErro("Erro ao remover usuário"));
   }
 
+  function cadastrarRec(formulario){
+
+    formulario.preventDefault();
+        if (!formulario) return;
+        const form = new FormData(formulario.currentTarget);
+        const dados = Object.fromEntries(form);
+        console.log(dados);
+        let params = {};
+    fetch(API + "/Rec", {
+      method: "POST",
+      headers: headers(),
+      body: JSON.stringify({ 
+        nome: dados.nome,
+        capacidade: dados.capacidade,
+        localizacao: dados.localizacao,
+        isLab: dados.isLab
+       })
+    })
+      .then((resposta) => {
+        if (!resposta.ok) throw new Error("Falha ao cadastrar");
+        alert("Recurso cadastrado com sucesso!");
+        setAba("recursos"); 
+        buscarRecursos();
+      })
+      .catch(() => setErro("Erro ao cadastrar recurso"));
+  }
+
   return (
     <div className="admin">
       <h1>Admin</h1>
@@ -142,8 +169,11 @@ function Admin() {
         <button onClick={() => { setAba("usuarios"); buscarUsuarios(); }}>
           Usuários
         </button>
-        <button onClick={() => { setAba("listar"); buscarUsuarios(); }}>
-          Listar usuário
+        <button onClick={() => { setAba("cadastrarRec"); }}>
+          Cadastrar Recurso
+        </button>
+        <button onClick={() => { navigate('/Reservados') }}>
+          Reservas
         </button>
       </div>
 
@@ -162,11 +192,11 @@ function Admin() {
               </button>
 
               {item.bloqueado ? (
-                <button onClick={() => bloqRecurso(item.codigo, false)}>
+                <button className='desbloquear' onClick={() => bloqRecurso(item.codigo, false)}>
                   Desbloquear
                 </button>
               ) : (
-                <button onClick={() => bloqRecurso(item.codigo, true)}>
+                <button className='bloquear' onClick={() => bloqRecurso(item.codigo, true)}>
                   Bloquear
                 </button>
               )}
@@ -174,15 +204,27 @@ function Admin() {
           </div>
         ))}
 
-      {aba === "listar" &&
-        usuarios.map((item) => (
-          <div key={item.id} className="item">
-            <div>
-              <b>{item.nome}</b>
-              <p>ID: {item.id} | {item.email}</p>
-            </div>
+      {aba === "cadastrarRec" && 
+          <div className="form">
+            <form onSubmit={cadastrarRec}>
+              <label>Nome do Recurso:</label>
+              <input type="text" name="nome"></input>
+              <label>Capacidade:</label>
+              <input type="number" name="capacidade"></input>
+              <label>Localização:</label>
+              <input type="text" name="localizacao"></input>
+              <label>É laboratório:</label>
+              <label>
+                <input type="radio" name="isLab" value="1"/>Sim
+                <input type="radio" name="isLab" value="0"/>Não
+              </label>
+              <button type="reset">Limpar</button>
+              <button type="submit">Cadastrar</button>
+
+            </form>
           </div>
-        ))}
+        
+        }
 
       {aba === "usuarios" &&
         usuarios.map((item) => (

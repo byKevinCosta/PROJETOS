@@ -21,7 +21,45 @@ body {
     min-height: 100vh;
 }
 
+nav {
+  background-color:  #8d22be;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: right;
+  gap: 40px;
+}
 
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+.nomeSite{
+    margin-left: 10px;
+    margin-right: auto;
+    color: #fff;
+}
+
+.btSair{
+    all: unset; /* Remove todos os estilos herdados e padrão do navegador */
+    cursor: pointer; /* Mantém o cursor de clique */
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    background:  #8d22be;
+    outline: none; /* Remove a borda de foco padrão */
+    box-shadow: none; /* Remove eventuais sombras */
+
+}
+
+.btSair:hover{
+    text-decoration: underline;
+}
 
 .cabecalho {
     display: flex;
