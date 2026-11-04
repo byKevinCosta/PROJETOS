@@ -75,7 +75,7 @@ function Labs() {
                     Lista de Recursos
                 </p>
 
-                <h2>Laboratórios disponíveis</h2>
+                <h2>Recursos disponíveis</h2>
 
                 {carregando && (
                     <p className="mensagem">
