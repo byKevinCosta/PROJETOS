@@ -177,7 +177,7 @@ class RecursosController
   excluirReserva()
   {
     return ((request,response) =>{
-      const idUsuario = request.usuario.id;
+      const idUsuario = request.body.id;
       const idReserva = request.body.idReserva;
       const recursosCRUD = new RecursosCRUD(db);
       recursosCRUD.exclusaoReserva(idUsuario,idReserva)

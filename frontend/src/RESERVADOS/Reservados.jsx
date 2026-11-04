@@ -11,6 +11,7 @@ const token = localStorage.getItem("token");
 
 export default function reservados()
 {
+    const navigate = useNavigate();
     let [reservas,setReservas] = useState([]);
    /* useEffect(() ={
 
@@ -71,8 +72,7 @@ export default function reservados()
         setReservas(dadosReservas);
     }
 
-    async function listarTodos(e) {
-        e.preventDefault();
+    async function listarTodos() {
         const resposta = await fetch("http://localhost:8081/Reservas", {
         method: "GET",
         headers: {
@@ -89,6 +89,29 @@ export default function reservados()
     function limpar()
     {
         setReservas([]);
+    }
+    
+    async function excluirReserva(idUsuario,idReserva){
+        console.log("Reserva id:" + idUsuario + "excluida");
+        console.log(idUsuario, idReserva)
+        const resposta = await fetch("http://localhost:8081/Reservas", {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            id: idUsuario,
+            idReserva: idReserva
+            })
+        }).then(() =>{
+            alert(`Reserva de id: ${idReserva} excluída com sucesso!`)
+            listarTodos();
+        })
+        .catch((erro) =>{
+            console.error(erro)
+        })
+        
     }
 
     function Formulario(){
@@ -142,6 +165,8 @@ export default function reservados()
                 <p>Nome do recurso: </p><span>{reserva.nome}, id Recurso: {reserva.codigoRec}</span>
                 <p>Data de inicio: </p><span>{reserva.dataInicio}</span>
                 <p>Data final da reserva: </p><span>{reserva.dataFim}</span>
+                <br></br>
+                <button onClick={() => excluirReserva(reserva.idUsuario,reserva.idReserva)}>Excluir reserva</button>
             </div>);
         })}
         </div>
