@@ -48,7 +48,7 @@ export default function reservados()
             params.dia = dados.dia
         }
         console.log(params);
-        if( !params.usuario && !params.nome && !params.codigo && !params.periodo && !params.dataInicio && !params.dataFim && !params.dia) 
+        if( !params.usuario && !params.nome && !params.codigo && !params.periodo && !params.inicio && !params.fim && !params.dia) 
             {
                 setReservas([]);
                 return;
@@ -56,9 +56,6 @@ export default function reservados()
         
         const query_string = new URLSearchParams(params).toString();
         const url = `http://localhost:8081/Reservas?${query_string}`;
-
-        console.log(params);
-        console.log(url);
 
         const resposta = await fetch(url, {
         method: "GET",
