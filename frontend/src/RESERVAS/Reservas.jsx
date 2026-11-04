@@ -6,19 +6,32 @@ const API = "http://localhost:8081";
 
 const horarios = [];
 
-for (let i = 10; i < 23; i++) {
+for (let i = 10; i <= 20; i++) {
     horarios.push({
-        inicio: i + ":00",
-        fim: (i + 1) + ":00"
+        inicio: `${String(i).padStart(2, "0")}:00`,
+        fim: i === 20 ? "21:00" : `${String(i + 1).padStart(2, "0")}:00`,
     });
 }
 
-function criarDataReserva(data, horario = "12:00:00") {
-    return new Date(data + "T" + horario);
+function criarDataReserva(data, horario = "12:00:00", diaSeguinte = false) {
+    const [ano, mes, dia] = data.split("-").map(Number);
+    const dataReserva = new Date(ano, mes - 1, dia);
+
+    if (diaSeguinte) {
+        dataReserva.setDate(dataReserva.getDate() + 1);
+    }
+
+    const dataFormatada =
+        dataReserva.getFullYear() + "-" +
+        String(dataReserva.getMonth() + 1).padStart(2, "0") + "-" +
+        String(dataReserva.getDate()).padStart(2, "0");
+
+    return `${dataFormatada}T${horario}`;
 }
 
 function obterDataLocal() {
     const data = new Date();
+
     return data.getFullYear() + "-" +
         String(data.getMonth() + 1).padStart(2, "0") + "-" +
         String(data.getDate()).padStart(2, "0");
@@ -76,7 +89,14 @@ function Reservas() {
                     })
                 });
 
-                const resultado = await resposta.json().catch(() => ({}));
+                const texto = await resposta.text();
+                let resultado = {};
+
+                try {
+                    resultado = texto ? JSON.parse(texto) : {};
+                } catch {
+                    resultado = {};
+                }
 
                 if (!resposta.ok) {
                     throw new Error(
@@ -90,18 +110,24 @@ function Reservas() {
                     ? resultado
                     : resultado.reservas;
 
+                console.log("RESERVAS RETORNADAS PELO SQL:", lista);
+
                 if (!Array.isArray(lista)) {
                     throw new Error("A API não retornou uma lista de reservas.");
                 }
 
-                if (!cancelado) setReservas(lista);
+                if (!cancelado) {
+                    setReservas(lista);
+                }
             } catch (erroConsulta) {
                 if (!cancelado) {
                     setErro(erroConsulta.message);
                     setReservas([]);
                 }
             } finally {
-                if (!cancelado) setCarregando(false);
+                if (!cancelado) {
+                    setCarregando(false);
+                }
             }
         }
 
@@ -112,22 +138,43 @@ function Reservas() {
         };
     }, [data, laboratorio]);
 
-function horarioOcupado(horario) {
-    return reservas.some(reserva => {
-        const inicio = new Date(reserva.dataInicio || reserva.dataInicioReserva);
-        const fim = new Date(reserva.dataFim || reserva.dataFimReserva);
+    function horarioOcupado(horario) {
+        return reservas.some(reserva => {
+            const inicio = new Date(
+                reserva.dataInicio || reserva.dataInicioReserva
+            );
 
-        const blocoInicio = criarDataReserva(data, horario.inicio + ":00");
-        const blocoFim = criarDataReserva(data, horario.fim + ":00");
+            const fim = new Date(
+                reserva.dataFim || reserva.dataFimReserva
+            );
 
-        if (isNaN(inicio) || isNaN(fim)) return false;
+            const blocoInicio = new Date(
+                criarDataReserva(data, horario.inicio + ":00")
+            );
 
-        return inicio < blocoFim && fim > blocoInicio;
-    });
-}
+            const blocoFim = new Date(
+                criarDataReserva(
+                    data,
+                    horario.fim + ":00",
+                    horario.diaSeguinte
+                )
+            );
+
+            console.log("Reserva:", reserva);
+            console.log("Início:", inicio);
+            console.log("Fim:", fim);
+            console.log("Bloco:", blocoInicio, blocoFim);
+
+            if (isNaN(inicio) || isNaN(fim)) {
+                return false;
+            }
+
+            return inicio < blocoFim && fim > blocoInicio;
+        });
+    }
 
     async function confirmarReserva() {
-        if (!horarioConfirmacao) return;
+        if (!horarioConfirmacao || enviando) return;
 
         const token = localStorage.getItem("token");
 
@@ -150,6 +197,22 @@ function horarioOcupado(horario) {
             return;
         }
 
+        const dataInicio = criarDataReserva(
+            data,
+            horarioConfirmacao.inicio + ":00"
+        );
+
+        const dataFim = criarDataReserva(
+            data,
+            horarioConfirmacao.fim + ":00",
+            horarioConfirmacao.diaSeguinte
+        );
+
+        console.log("Data inicial enviada:", dataInicio);
+        console.log("Data final enviada:", dataFim);
+        console.log("Laboratório:", laboratorio.codigo);
+        console.log("Usuário:", idUsuario);
+
         setEnviando(true);
         setErro("");
         setMensagem("");
@@ -164,18 +227,22 @@ function horarioOcupado(horario) {
                 body: JSON.stringify({
                     idRec: laboratorio.codigo,
                     idUsuario,
-                    dataInicio: criarDataReserva(
-                        data,
-                        `${horarioConfirmacao.inicio}:00`
-                    ),
-                    dataFim: criarDataReserva(
-                        data,
-                        `${horarioConfirmacao.fim}:00`
-                    )
+                    dataInicio,
+                    dataFim
                 })
             });
 
-            const resultado = await resposta.json().catch(() => ({}));
+            const texto = await resposta.text();
+            let resultado = {};
+
+            try {
+                resultado = texto ? JSON.parse(texto) : {};
+            } catch {
+                resultado = {};
+            }
+
+            console.log("Status da reserva:", resposta.status);
+            console.log("Resposta da reserva:", texto);
 
             if (!resposta.ok) {
                 throw new Error(
@@ -188,9 +255,9 @@ function horarioOcupado(horario) {
             setMensagem(
                 `Reserva solicitada para ${horarioConfirmacao.inicio} às ${horarioConfirmacao.fim}.`
             );
+
             setHorarioConfirmacao(null);
 
-            // Atualiza os horários depois de enviar a reserva.
             const atualizacao = await fetch(`${API}/ReservaNoDia`, {
                 method: "POST",
                 headers: {
@@ -204,15 +271,34 @@ function horarioOcupado(horario) {
             });
 
             if (atualizacao.ok) {
-                const resultadoAtualizado = await atualizacao.json();
+                const textoAtualizado = await atualizacao.text();
+                let resultadoAtualizado = {};
+
+                try {
+                    resultadoAtualizado = textoAtualizado
+                        ? JSON.parse(textoAtualizado)
+                        : {};
+                } catch {
+                    resultadoAtualizado = {};
+                }
+
                 const lista = Array.isArray(resultadoAtualizado)
                     ? resultadoAtualizado
                     : resultadoAtualizado.reservas;
 
-                if (Array.isArray(lista)) setReservas(lista);
+                console.log("RESERVAS APÓS AGENDAMENTO:", lista);
+
+                if (Array.isArray(lista)) {
+                    setReservas(lista);
+                }
             }
         } catch (erroReserva) {
-            setErro(erroReserva.message || "Não foi possível realizar a reserva.");
+            console.error("ERRO AO RESERVAR:", erroReserva);
+
+            setErro(
+                erroReserva.message ||
+                "Não foi possível realizar a reserva."
+            );
         } finally {
             setEnviando(false);
         }
@@ -231,6 +317,7 @@ function horarioOcupado(horario) {
                         Escolha um laboratório na página de laboratórios
                         para visualizar os horários.
                     </p>
+
                     <Link to="/Labs" className="botao-voltar">
                         Voltar aos laboratórios
                     </Link>
@@ -276,7 +363,7 @@ function horarioOcupado(horario) {
                         min={obterDataLocal()}
                         onChange={(evento) => {
                             setData(evento.target.value);
-                            setHorarioSelecionado("");
+                            setHorarioConfirmacao(null);
                             setMensagem("");
                             setErro("");
                         }}
@@ -292,19 +379,26 @@ function horarioOcupado(horario) {
                 </div>
 
                 <h2>Horários disponíveis</h2>
+
                 <p className="reservas-instrucao">
-                    Escolha um bloco de uma hora, entre 10:00 e 23:00.
+                    Escolha um bloco de uma hora, entre 10:00 e 00:00.
                 </p>
 
                 {carregando && (
-                    <p className="reservas-mensagem">Consultando horários...</p>
+                    <p className="reservas-mensagem">
+                        Consultando horários...
+                    </p>
                 )}
+
                 {erro && <p className="reservas-erro">{erro}</p>}
-                {mensagem && <p className="reservas-sucesso">{mensagem}</p>}
+
+                {mensagem && (
+                    <p className="reservas-sucesso">{mensagem}</p>
+                )}
 
                 {!data && (
                     <p className="reservas-mensagem">
-                        Clique no ícone do calendário e escolha uma data.
+                        Clique no calendário e escolha uma data.
                     </p>
                 )}
 
@@ -341,7 +435,10 @@ function horarioOcupado(horario) {
                         aria-modal="true"
                         aria-labelledby="titulo-confirmacao"
                     >
-                        <h2 id="titulo-confirmacao">Confirmar reserva</h2>
+                        <h2 id="titulo-confirmacao">
+                            Confirmar reserva
+                        </h2>
+
                         <p>
                             Deseja realmente agendar o laboratório{" "}
                             <strong>{laboratorio.nome}</strong> para o dia{" "}
@@ -359,6 +456,7 @@ function horarioOcupado(horario) {
                             >
                                 Cancelar
                             </button>
+
                             <button
                                 type="button"
                                 className="botao-confirmar"

@@ -110,7 +110,7 @@ function App() {
                             value={cpf}
                             maxLength={11}
                             onChange={(event) => {
-                            const valor = event.target.value;
+                            const valor = event.target.value.replace(/\D/g, "");
                             if (valor.length <= 11) {
                                 setCpf(valor);
                             }
